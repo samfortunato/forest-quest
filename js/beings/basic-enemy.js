@@ -1,10 +1,12 @@
+import { monsterSprites1 } from './graphics/beings';
+
 class BasicEnemy {
   constructor(x = 200, y = 200) {
     this.x = x;
     this.y = y;
-    this.width = 25;
-    this.height = 25;
-    this.color = 'red';
+    this.width = 20;
+    this.height = 20;
+    this.sprite = monsterSprites1;
   }
 
   track(entity) {
