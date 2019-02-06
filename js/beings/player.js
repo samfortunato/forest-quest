@@ -1,6 +1,8 @@
 import { collisionDetected } from '../util/collision-util';
 import { playerSprites } from '../beings/graphics/beings';
 
+import entities from './entities';
+
 class Player {
   constructor(x = 100, y = 100) {
     this.x = x;
@@ -14,7 +16,13 @@ class Player {
   }
 
   move(currentlyPressedKeys) {
-    if (collisionDetected()) this.velocity = 0;
+    Object.keys(entities).forEach((entity, i) => {
+      if (i === 0) continue;
+      
+      if (collisionDetected(this, entities[entity])) {
+        this.velocity = 0;
+      }
+    });
     
     if(currentlyPressedKeys.ArrowUp) {
       this.y -= (this.speed * this.velocity);
