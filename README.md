@@ -14,7 +14,7 @@ When HP is 0, you lose.
 1. Player can walk around
 2. Enemies are walking around
 3. Scenery/enemy collision detection
-4. Player can attack enemies/get hurt by enemies
+4. Player can attack enemies/get hurt by enemies (hitboxes)
 5. Player can jump to dodge
 6. Large map; map will scroll if player moves around
 7. Healing items
