@@ -1,15 +1,12 @@
-import { initializeControls, keypressListener } from './config/controls';
-import { drawBeing } from './util/draw-util';
-
+import { setup } from './config/setup';
+import { initializeControls} from './config/controls';
+import { drawPlayer, drawMonster } from './util/draw-util';
 import Player from './beings/player';
 import BasicEnemy from './beings/basic-enemy';
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-
-canvas.width = 800;
-canvas.height = 600;
-canvas.style.backgroundColor = 'grey';
+setup(canvas);
 
 const currentlyPressedKeys = {};
 initializeControls(currentlyPressedKeys);
@@ -20,12 +17,11 @@ const basicEnemy = new BasicEnemy();
 const draw = () => {
   ctx.clearRect(0, 0, 800, 600);
 
-  drawBeing(ctx, player);
+  player.move(currentlyPressedKeys);
+  drawPlayer(player, ctx);
 
   basicEnemy.track(player);
-  drawBeing(ctx, basicEnemy);
-
-  keypressListener(player, currentlyPressedKeys);
+  drawMonster(basicEnemy, ctx);
   
   requestAnimationFrame(draw);
 };
