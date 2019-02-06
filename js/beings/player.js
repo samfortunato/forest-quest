@@ -11,28 +11,26 @@ class Player {
     this.height = 20;
     this.speed = 3;
     this.velocity = 1;
-    this.sprite = playerSprites;
     this.facing = 'down';
+    this.sprite = playerSprites;
   }
 
   move(currentlyPressedKeys) {
     Object.keys(entities).forEach((entity, i) => {
-      if (i === 0) continue;
-      
-      if (collisionDetected(this, entities[entity])) {
-        this.velocity = 0;
+      if (i === 0) return;
+        
+      if (collisionDetected(this, entity)) {
+        return;
+      } else if (currentlyPressedKeys.ArrowUp) {
+        this.y -= (this.speed * this.velocity);
+      } else if (currentlyPressedKeys.ArrowRight) {
+        this.x += (this.speed * this.velocity);
+      } else if (currentlyPressedKeys.ArrowDown) {
+        this.y += (this.speed * this.velocity);
+      } else if( currentlyPressedKeys.ArrowLeft) {
+        this.x -= (this.speed * this.velocity);
       }
     });
-    
-    if(currentlyPressedKeys.ArrowUp) {
-      this.y -= (this.speed * this.velocity);
-    } else if(currentlyPressedKeys.ArrowRight) {
-      this.x += (this.speed * this.velocity);
-    } else if(currentlyPressedKeys.ArrowDown) {
-      this.y += (this.speed * this.velocity);
-    } else if(currentlyPressedKeys.ArrowLeft) {
-      this.x -= (this.speed * this.velocity);
-    }
   }
 }
 
