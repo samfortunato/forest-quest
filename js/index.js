@@ -16,10 +16,10 @@ const draw = () => {
   ctx.clearRect(0, 0, 800, 600);
 
   player.move(currentlyPressedKeys);
-  DrawEntityUtil.drawPlayer(player, ctx);
+  DrawEntityUtil.drawBeing(player, ctx);
 
   basicEnemy.track(player);
-  DrawEntityUtil.drawMonster(basicEnemy, ctx);
+  DrawEntityUtil.drawBeing(basicEnemy, ctx);
   
   requestAnimationFrame(draw);
 };
