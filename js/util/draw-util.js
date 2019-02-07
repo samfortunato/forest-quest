@@ -1,7 +1,7 @@
 export const drawBeing = (being, ctx) => {
-  let cropBox, spriteSize;
-
   const playerSpriteCropData = being.spriteCropData();
+
+  let cropBox, spriteSize;
   
   switch (being.frameIndex) {
     case 0:
