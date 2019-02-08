@@ -9,7 +9,6 @@ export const collisionDetected = (entity1, entity2) => {
       entity1.y < (entity2.y + entity2.height) &&
       (entity1.y + entity1.height) > entity2.y) {
     
-    console.log('detected');
     return true;
   }
 

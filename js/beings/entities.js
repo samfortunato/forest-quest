@@ -16,7 +16,8 @@ const entities = {
     tree5: new Tree(736, 64),
     tree6: new Tree(896, 0),
     tree7: new Tree(64, 160),
-    rock1: new Rock(160, 160)
+    rock1: new Rock(160, 160),
+    treeTest: new Tree(300, 300)
   },
 };
 

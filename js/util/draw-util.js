@@ -43,10 +43,12 @@ export const drawEntity = (entity, ctx) => {
 };
 
 export const drawSceneryBounds = (object, ctx) => {
-  ctx.fillStyle = object.color;
+  ctx.fillStyle = 'rgba(255, 0, 0, .5)';
   
+  // Draw object sprite bounds
   ctx.fillRect(object.x, object.y, object.width, object.height);
   
+  // Draw object collision bounds
   ctx.fillRect(
     object.boundaryX,
     object.boundaryY,
