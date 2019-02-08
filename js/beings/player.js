@@ -23,23 +23,23 @@ class Player extends Entity {
     return {
       up: [
         [[54, 8], [38, 56]],
-        [[2, 10], [44, 54]],
-        [[100, 10], [44, 54]]
+        [[6, 8], [44, 54]],
+        [[102, 8], [44, 54]]
       ],
       right: [
         [[54, 72], [34, 56]],
-        [[2, 74], [38, 54]],
-        [[98, 74], [38, 54]]
+        [[6, 72], [38, 54]],
+        [[102, 72], [38, 54]]
       ],
       down: [
         [[52, 136], [42, 56]],
-        [[2, 138], [46, 54]],
-        [[98, 138], [46, 54]]
+        [[4, 136], [46, 54]],
+        [[100, 136], [46, 54]]
       ],
       left: [
         [[56, 200], [34, 56]],
-        [[8, 202], [38, 54]],
-        [[104, 202], [38, 54]]
+        [[8, 200], [38, 54]],
+        [[104, 200], [38, 54]]
       ]
     };
   }
@@ -62,8 +62,6 @@ class Player extends Entity {
     if (currentlyPressedKeys.ArrowUp) {
       this.facing = 'up';
       this.animate();
-
-      // const wouldCollideBool = wouldCollideWithAny(this.facing, this, entities);
       
       if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.y -= (this.speed * this.velocity);
