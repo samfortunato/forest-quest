@@ -1,3 +1,5 @@
+import Scenery from '../scenery/scenery';
+
 export const drawBeing = (being, ctx) => {
   const playerSpriteCropData = being.spriteCropData();
 
@@ -33,4 +35,36 @@ export const drawBeing = (being, ctx) => {
     being.x, being.y,
     ...spriteSize
   );
+};
+
+export const drawEntity = (entity, ctx) => {
+  ctx.fillStyle = entity.color;
+  ctx.fillRect(entity.x, entity.y, entity.width, entity.height);
+};
+
+export const drawSceneryBounds = (object, ctx) => {
+  ctx.fillStyle = object.color;
+  
+  ctx.fillRect(object.x, object.y, object.width, object.height);
+  
+  ctx.fillRect(
+    object.boundaryX,
+    object.boundaryY,
+    object.boundaryWidth,
+    object.boundaryHeight
+  );
+};
+
+export const drawScenery = (object, ctx) => {
+  ctx.drawImage(object.sprite, object.x, object.y);
+};
+
+export const drawAllBoundaries = (boundaries, ctx) => {
+  Object.values(boundaries).forEach((boundary) => {
+    if (boundary instanceof Scenery) {
+      drawScenery(boundary, ctx);
+    } else {
+      drawEntity(boundary, ctx);
+    }
+  });
 };

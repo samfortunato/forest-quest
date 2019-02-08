@@ -1,23 +1,21 @@
-import { collisionDetected } from '../util/collision-util';
+import Entity from './entity';
+import { wouldCollideWithAny } from '../util/collision-util';
 import { playerSprites } from '../beings/graphics/beings';
 
 import entities from './entities';
 
-class Player {
+class Player extends Entity {
   constructor(x = 100, y = 100) {
-    this.x = x;
-    this.y = y;
-    this.width = 20;
-    this.height = 20;
+    super(x, y, 42, 56);
 
-    this.speed = 3;
+    this.speed = 4;
     this.velocity = 1;
     this.facing = 'down';
     
     this.sprite = playerSprites;
     this.frameIndex = 0;
     this.tickCount = 0;
-    this.ticksPerFrame = 4;
+    this.ticksPerFrame = 5;
     this.numberOfFrames = 4;
   }
 
@@ -61,34 +59,39 @@ class Player {
   }
 
   move(currentlyPressedKeys) {
-    Object.keys(entities).forEach((entity, i) => {
-      if (i === 0) return;
-        
-      if (collisionDetected(this, entity)) {
-        this.velocity = 0;
-      } else {
-        this.velocity = 1;
-      }
+    if (currentlyPressedKeys.ArrowUp) {
+      this.facing = 'up';
+      this.animate();
+
+      // const wouldCollideBool = wouldCollideWithAny(this.facing, this, entities);
       
-      if (currentlyPressedKeys.ArrowUp) {
-        this.facing = 'up';
-        this.animate();
+      if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.y -= (this.speed * this.velocity);
-      } else if (currentlyPressedKeys.ArrowRight) {
-        this.facing = 'right';
-        this.animate();
+      }
+    } else if (currentlyPressedKeys.ArrowRight) {
+      this.facing = 'right';
+      this.animate();
+
+      if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.x += (this.speed * this.velocity);
-      } else if (currentlyPressedKeys.ArrowDown) {
-        this.facing = 'down';
-        this.animate();
+      }
+    } else if (currentlyPressedKeys.ArrowDown) {
+      this.facing = 'down';
+      this.animate();
+
+      if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.y += (this.speed * this.velocity);
-      } else if( currentlyPressedKeys.ArrowLeft) {
-        this.facing = 'left';
-        this.animate();
+      }
+    } else if( currentlyPressedKeys.ArrowLeft) {
+      this.facing = 'left';
+      this.animate();
+
+      if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.x -= (this.speed * this.velocity);
       }
-    });
+    }
   }
 }
 
 export default Player;
+

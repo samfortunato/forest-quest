@@ -1,4 +1,17 @@
+#game {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  padding-top: 1rem;
+}
+
+#grid {
+  z-index: 10;
+  position: absolute;
+  display: block;
+}
+
 canvas {
   display: block;
-  margin: 1rem auto 0;
 }

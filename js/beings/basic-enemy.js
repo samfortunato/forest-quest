@@ -1,11 +1,9 @@
+import Entity from './entity';
 import { monsterSprites1 } from './graphics/beings';
 
-class BasicEnemy {
+class BasicEnemy extends Entity {
   constructor(x = 200, y = 200) {
-    this.x = x;
-    this.y = y;
-    this.width = 20;
-    this.height = 20;
+    super(x, y, 36, 24);
 
     this.speed = 1;
     this.facing = 'down';
@@ -57,7 +55,7 @@ class BasicEnemy {
   }
 
   track(entity) {
-    if (entity.y < this.y) {
+    if (entity.y < (this.y - entity.height)) {
       this.facing = 'up';
       this.animate();
       this.y -= this.speed;
