@@ -120,6 +120,8 @@ class Player extends Entity {
       }
     } else if (currentlyPressedKeys[' ']) {
       this.attack();
+    } else {
+      this.attacking = false;
     }
   }
 

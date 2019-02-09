@@ -41,6 +41,10 @@ export const drawAttackBox = (entity, ctx) => {
   const { up, right, down, left } = entity.attackBox();
   ctx.fillStyle = 'rgba(255, 0, 0, .5)';
 
+  if (entity.attacking === false) {
+    return;
+  }
+  
   switch (entity.facing) {
     case 'up':
       ctx.fillRect(up.x, up.y, up.width, up.height);

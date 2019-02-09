@@ -20,4 +20,8 @@ const entities = {
   },
 };
 
+export const allEntities = () => {
+  return Object.values(entities);
+};
+
 export default entities;
