@@ -1,5 +1,5 @@
 import Scenery from './scenery';
-import { treeSprite } from '../beings/graphics/scenery';
+import { overworld1 } from '../beings/graphics/scenery';
 
 class Tree extends Scenery {
   constructor(x = 0, y = 0) {
@@ -15,7 +15,13 @@ class Tree extends Scenery {
     this.boundaryWidth = 64;
     this.boundaryHeight = 32;
 
-    this.sprite = treeSprite;
+    this.sprite = overworld1;
+    this.spriteCropData = [
+      832, 224,
+      this.width, this.height,
+      this.x, this.y,
+      this.width, this.height
+    ];
   }
 }
 

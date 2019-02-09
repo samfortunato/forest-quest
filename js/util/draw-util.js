@@ -58,7 +58,7 @@ export const drawSceneryBounds = (object, ctx) => {
 };
 
 export const drawScenery = (object, ctx) => {
-  ctx.drawImage(object.sprite, object.x, object.y);
+  ctx.drawImage(object.sprite, ...object.spriteCropData);
 };
 
 export const drawAllBoundaries = (boundaries, ctx) => {

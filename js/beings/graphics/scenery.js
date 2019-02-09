@@ -1,7 +1,8 @@
-const treeSprite = new Image();
+export const treeSprite = new Image();
 treeSprite.src = './img/scenery/tree.png';
 
-const rockSprite = new Image();
+export const rockSprite = new Image();
 rockSprite.src = './img/scenery/rock.png';
 
-export { treeSprite, rockSprite };
+export const overworld1 = new Image();
+overworld1.src = './img/scenery/overworld_1.png';

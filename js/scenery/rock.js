@@ -1,5 +1,5 @@
 import Scenery from './scenery';
-import { rockSprite } from '../beings/graphics/scenery';
+import { overworld1 } from '../beings/graphics/scenery';
 
 class Rock extends Scenery {
   constructor(x = 0, y = 0) {
@@ -15,7 +15,13 @@ class Rock extends Scenery {
     this.boundaryWidth = this.width;
     this.boundaryHeight = this.height;
 
-    this.sprite = rockSprite;
+    this.sprite = overworld1;
+    this.spriteCropData = [
+      576, 288,
+      this.width, this.height,
+      this.x, this.y,
+      this.width, this.height
+    ];
   }
 }
 
