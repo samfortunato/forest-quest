@@ -118,7 +118,9 @@ class Player extends Entity {
       if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.move(this.facing);
       }
-    } else if (currentlyPressedKeys[' ']) {
+    }
+    
+    if (currentlyPressedKeys[' ']) {
       this.attack();
     } else {
       this.attacking = false;
