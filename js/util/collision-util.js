@@ -2,6 +2,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import Scenery from '../scenery/scenery';
 import Entity from '../beings/entity';
+import Player from '../beings/player';
 
 export const collisionDetected = (entity1, entity2) => {
   if (entity1.x < (entity2.x + entity2.width) &&
@@ -45,31 +46,25 @@ export const wouldCollide = (direction, entity1, entity2) => {
 };
 
 export const wouldCollideWithAny = (direction, entity, entities) => {
-  const collidesWithAnyBoundary = (boundary) => {
-    if (boundary instanceof Scenery) {
+  const collidesWithSingleEntity = (singleEntity) => {
+    if (singleEntity instanceof Player) {
+      return false;
+    } else if (singleEntity instanceof Scenery) {
       const sceneryValues = {
-        x: boundary.boundaryX,
-        y: boundary.boundaryY,
-        width: boundary.boundaryWidth,
-        height: boundary.boundaryHeight
+        x: singleEntity.boundaryX,
+        y: singleEntity.boundaryY,
+        width: singleEntity.boundaryWidth,
+        height: singleEntity.boundaryHeight
       };
 
       return wouldCollide(direction, entity, sceneryValues);
     } else {
-      return wouldCollide(direction, entity, boundary);
+      return wouldCollide(direction, entity, singleEntity);
     }
   };
   
   const collidesWithAnyEntity = (otherEntity, i) => {
-    if (i === 0) {
-      return;
-    } else {
-      if (!(otherEntity instanceof Entity)) {
-        return Object.values(otherEntity).some(collidesWithAnyBoundary);
-      } else {
-        return wouldCollide(direction, entity, otherEntity);
-      }
-    }
+    return Object.values(otherEntity).some(collidesWithSingleEntity);
   };
   
   return Object.values(entities).some(collidesWithAnyEntity);

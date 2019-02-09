@@ -2,7 +2,7 @@ import Entity from './entity';
 import { wouldCollideWithAny } from '../util/collision-util';
 import { playerSprites } from '../beings/graphics/beings';
 
-import entities from './entities';
+import entities, { allEntities } from './entities';
 
 class Player extends Entity {
   constructor(x = 100, y = 100) {
@@ -146,6 +146,8 @@ class Player extends Entity {
 
   attack() {
     this.attacking = true;
+
+    // allEntities.some()
   }
 }
 

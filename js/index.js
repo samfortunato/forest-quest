@@ -10,16 +10,17 @@ const currentlyPressedKeys = {};
 SetupUtil.initializeControls(currentlyPressedKeys);
 
 const draw = () => {
-  const { player, basicEnemy, boundaries } = entities;
+  const { player, basicEnemy } = entities.beings;
+  const { boundaries } = entities;
   
   ctx.clearRect(0, 0, 800, 600);
 
   player.controls(currentlyPressedKeys);
-  // basicEnemy.track(player);
+  basicEnemy.track(player);
   
   DrawEntityUtil.drawBeing(player, ctx);
   DrawEntityUtil.drawAttackBox(player, ctx);
-  // DrawEntityUtil.drawBeing(basicEnemy, ctx);
+  DrawEntityUtil.drawBeing(basicEnemy, ctx);
   DrawEntityUtil.drawAllBoundaries(boundaries, ctx);
   
   requestAnimationFrame(draw);

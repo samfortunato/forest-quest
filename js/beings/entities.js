@@ -5,9 +5,11 @@ import Tree from '../scenery/tree';
 import Rock from '../scenery/rock';
 
 const entities = {
-  player: new Player(),
-  basicEnemy: new BasicEnemy(),
-
+  beings: {
+    player: new Player(),
+    basicEnemy: new BasicEnemy(),
+  },
+  
   boundaries: {
     rock1: new Rock(160, 160),
     tree1: new Tree(224, -96),
