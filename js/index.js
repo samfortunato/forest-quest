@@ -14,7 +14,7 @@ const draw = () => {
   
   ctx.clearRect(0, 0, 800, 600);
 
-  player.move(currentlyPressedKeys);
+  player.controls(currentlyPressedKeys);
   // basicEnemy.track(player);
   
   DrawEntityUtil.drawBeing(player, ctx);

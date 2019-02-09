@@ -11,6 +11,8 @@ class Player extends Entity {
     this.speed = 4;
     this.velocity = 1;
     this.facing = 'down';
+
+    this.attacking = false;
     
     this.sprite = playerSprites;
     this.frameIndex = 0;
@@ -87,42 +89,61 @@ class Player extends Entity {
     };
   }
 
-  move(currentlyPressedKeys) {
+  controls(currentlyPressedKeys) {
     if (currentlyPressedKeys.ArrowUp) {
       this.facing = 'up';
       this.animate();
       
       if (!wouldCollideWithAny(this.facing, this, entities)) {
-        this.y -= (this.speed * this.velocity);
+        this.move(this.facing);
       }
     } else if (currentlyPressedKeys.ArrowRight) {
       this.facing = 'right';
       this.animate();
 
       if (!wouldCollideWithAny(this.facing, this, entities)) {
-        this.x += (this.speed * this.velocity);
+        this.move(this.facing);
       }
     } else if (currentlyPressedKeys.ArrowDown) {
       this.facing = 'down';
       this.animate();
 
       if (!wouldCollideWithAny(this.facing, this, entities)) {
-        this.y += (this.speed * this.velocity);
+        this.move(this.facing);
       }
     } else if (currentlyPressedKeys.ArrowLeft) {
       this.facing = 'left';
       this.animate();
 
       if (!wouldCollideWithAny(this.facing, this, entities)) {
-        this.x -= (this.speed * this.velocity);
+        this.move(this.facing);
       }
     } else if (currentlyPressedKeys[' ']) {
       this.attack();
     }
   }
 
+  move(direction) {
+    const moveSpeed = (this.speed * this.velocity);
+    
+    switch (direction) {
+      case 'up':
+        this.y -= moveSpeed;
+        break;
+      case 'right':
+        this.x += moveSpeed;
+        break;
+      case 'down':
+        this.y += moveSpeed;
+        break;
+      case 'left':
+        this.x -= moveSpeed;
+        break;
+    }
+  }
+
   attack() {
-    console.log('sup');
+    this.attacking = true;
   }
 }
 
