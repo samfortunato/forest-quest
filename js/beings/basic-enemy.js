@@ -5,6 +5,8 @@ class BasicEnemy extends Entity {
   constructor(x = 200, y = 200) {
     super(x, y, 36, 24);
 
+    this.hp = 3;
+    
     this.speed = 1;
     this.facing = 'down';
     

@@ -1,13 +1,15 @@
 import Entity from './entity';
-import { wouldCollideWithAny } from '../util/collision-util';
+import { wouldCollideWithAny, collisionDetected } from '../util/collision-util';
 import { playerSprites } from '../beings/graphics/beings';
 
-import entities, { allEntities } from './entities';
+import entities from './entities';
 
 class Player extends Entity {
   constructor(x = 100, y = 100) {
     super(x, y, 42, 56);
 
+    this.hp = 3;
+    
     this.speed = 4;
     this.velocity = 1;
     this.facing = 'down';
@@ -121,7 +123,7 @@ class Player extends Entity {
     }
     
     if (currentlyPressedKeys[' ']) {
-      this.attack();
+      this.attack(this.facing);
     } else {
       this.attacking = false;
     }
@@ -146,10 +148,25 @@ class Player extends Entity {
     }
   }
 
-  attack() {
+  attack(direction) {
     this.attacking = true;
 
-    // allEntities.some()
+    const { enemies } = entities.beings;
+    const { [direction]: attackBox } = this.attackBox();
+
+    const enemiesThatWereHit = Object.values(enemies).filter((enemy) => {
+      return collisionDetected(attackBox, enemy);
+    });
+
+    if (enemiesThatWereHit.length !== 0) {
+      enemiesThatWereHit.forEach((enemy) => {
+        enemy.hp--;
+      });
+    }
+  }
+
+  hurt() {
+    this.hp--;
   }
 }
 
