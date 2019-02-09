@@ -58,6 +58,35 @@ class Player extends Entity {
     }
   }
 
+  attackBox() {
+    return {
+      up: {
+        x: this.x,
+        y: (this.y - (this.height / 2)),
+        width: 42,
+        height: 28
+      },
+      right: {
+        x: (this.x + this.width),
+        y: (this.y + (this.height / 2)),
+        width: 28,
+        height: 42
+      },
+      down: {
+        x: this.x,
+        y: (this.y + this.height),
+        width: this.width,
+        height: (this.height / 2)
+      },
+      left: {
+        x: (this.x - this.width + 10),
+        y: (this.y + (this.height / 2)),
+        width: 28,
+        height: 42
+      }
+    };
+  }
+
   move(currentlyPressedKeys) {
     if (currentlyPressedKeys.ArrowUp) {
       this.facing = 'up';
@@ -80,14 +109,20 @@ class Player extends Entity {
       if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.y += (this.speed * this.velocity);
       }
-    } else if( currentlyPressedKeys.ArrowLeft) {
+    } else if (currentlyPressedKeys.ArrowLeft) {
       this.facing = 'left';
       this.animate();
 
       if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.x -= (this.speed * this.velocity);
       }
+    } else if (currentlyPressedKeys[' ']) {
+      this.attack();
     }
+  }
+
+  attack() {
+    console.log('sup');
   }
 }
 

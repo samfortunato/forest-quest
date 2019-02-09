@@ -37,6 +37,26 @@ export const drawBeing = (being, ctx) => {
   );
 };
 
+export const drawAttackBox = (entity, ctx) => {
+  const { up, right, down, left } = entity.attackBox();
+  ctx.fillStyle = 'rgba(255, 0, 0, .5)';
+
+  switch (entity.facing) {
+    case 'up':
+      ctx.fillRect(up.x, up.y, up.width, up.height);
+      break;
+    case 'right':
+      ctx.fillRect(right.x, right.y, right.width, right.height);
+      break;
+    case 'down':
+      ctx.fillRect(down.x, down.y, down.width, down.height);
+      break;
+    case 'left':
+      ctx.fillRect(left.x, left.y, left.width, left.height);
+      break;
+  }
+};
+
 export const drawEntity = (entity, ctx) => {
   ctx.fillStyle = entity.color;
   ctx.fillRect(entity.x, entity.y, entity.width, entity.height);

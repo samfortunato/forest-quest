@@ -18,6 +18,7 @@ const draw = () => {
   // basicEnemy.track(player);
   
   DrawEntityUtil.drawBeing(player, ctx);
+  DrawEntityUtil.drawAttackBox(player, ctx);
   // DrawEntityUtil.drawBeing(basicEnemy, ctx);
   DrawEntityUtil.drawAllBoundaries(boundaries, ctx);
   
