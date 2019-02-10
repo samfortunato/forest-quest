@@ -7,11 +7,11 @@ import Rock from '../scenery/rock';
 const entities = {
   beings: {
     friendlies: {
-      player: new Player(),
+      player: new Player()
     },
 
     enemies: {
-      basicEnemy: new BasicEnemy(),
+      basicEnemy: new BasicEnemy()
     }
   },
   
@@ -27,9 +27,5 @@ const entities = {
     tree8: new Tree(300, 300)
   },
 };
-
-// export const allEntities = () => {
-//   return Object.values(entities);
-// };
 
 export default entities;

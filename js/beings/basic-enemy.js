@@ -57,7 +57,7 @@ class BasicEnemy extends Entity {
   }
 
   track(entity) {
-    if (entity.y < (this.y - entity.height)) {
+    if (entity.y < this.y) {
       this.facing = 'up';
       this.animate();
       this.y -= this.speed;

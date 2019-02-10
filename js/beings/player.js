@@ -171,4 +171,3 @@ class Player extends Entity {
 }
 
 export default Player;
-

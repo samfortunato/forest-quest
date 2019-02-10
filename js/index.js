@@ -1,6 +1,8 @@
+import entities from './beings/entities';
+
 import * as SetupUtil from './config/setup';
 import * as DrawEntityUtil from './util/draw-util';
-import entities from './beings/entities';
+import * as AttackUtil from './util/attack-util';
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
@@ -24,8 +26,10 @@ const draw = () => {
       DrawEntityUtil.drawBeing(enemies.basicEnemy, ctx);
     }
   });
-  
+
   player.controls(currentlyPressedKeys);
+
+  AttackUtil.attackCollision(player);
   
   DrawEntityUtil.drawBeing(player, ctx);
   DrawEntityUtil.drawAttackBox(player, ctx);
