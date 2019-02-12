@@ -14,7 +14,6 @@ const gameLoop = () => {
   const { player } = entities.beings.friendlies;
 
   player.controls(currentlyPressedKeys);
-
   update();
   draw(ctx);
   

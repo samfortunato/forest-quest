@@ -99,3 +99,15 @@ export const drawAllEntities = (entities, ctx) => {
     }
   });
 };
+
+export const mapEntitiesToLayers = (entities, drawLayers) => {
+  Object.values(entities).forEach((entity) => {
+    drawLayers[entity.drawLayer].push(entity);
+  });
+};
+
+export const drawAllLayers = (drawLayers, ctx) => {
+  Object.values(drawLayers).forEach((layer) => {
+    drawAllEntities(Array.values(layer), ctx);
+  });
+};
