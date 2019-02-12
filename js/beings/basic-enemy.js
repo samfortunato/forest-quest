@@ -1,7 +1,7 @@
-import Entity from './entity';
+import Being from './being';
 import { monsterSprites1 } from './graphics/beings';
 
-class BasicEnemy extends Entity {
+class BasicEnemy extends Being {
   constructor(x = 200, y = 200) {
     super(x, y, 36, 24);
 

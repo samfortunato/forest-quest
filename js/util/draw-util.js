@@ -1,29 +1,30 @@
 import Scenery from '../scenery/scenery';
+import Being from '../beings/being';
 
 export const drawBeing = (being, ctx) => {
-  const playerSpriteCropData = being.spriteCropData();
+  const spriteCropData = being.spriteCropData();
 
   let cropBox, spriteSize;
   
   switch (being.frameIndex) {
     case 0:
-      cropBox = playerSpriteCropData[being.facing][0][0];
-      spriteSize = playerSpriteCropData[being.facing][0][1];
+      cropBox = spriteCropData[being.facing][0][0];
+      spriteSize = spriteCropData[being.facing][0][1];
 
       break;
     case 1:
-      cropBox = playerSpriteCropData[being.facing][1][0];
-      spriteSize = playerSpriteCropData[being.facing][1][1];
+      cropBox = spriteCropData[being.facing][1][0];
+      spriteSize = spriteCropData[being.facing][1][1];
 
       break;
     case 2:
-      cropBox = playerSpriteCropData[being.facing][0][0];
-      spriteSize = playerSpriteCropData[being.facing][0][1];
+      cropBox = spriteCropData[being.facing][0][0];
+      spriteSize = spriteCropData[being.facing][0][1];
 
       break;
     case 3:
-      cropBox = playerSpriteCropData[being.facing][2][0];
-      spriteSize = playerSpriteCropData[being.facing][2][1];
+      cropBox = spriteCropData[being.facing][2][0];
+      spriteSize = spriteCropData[being.facing][2][1];
 
       break;
   }
@@ -39,7 +40,7 @@ export const drawBeing = (being, ctx) => {
 
 export const drawAttackBox = (entity, ctx) => {
   const { up, right, down, left } = entity.attackBox();
-  ctx.fillStyle = 'rgba(255, 0, 0, .5)';
+  ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 
   if (entity.attacking === false) {
     return;
@@ -85,12 +86,16 @@ export const drawScenery = (object, ctx) => {
   ctx.drawImage(object.sprite, ...object.spriteCropData);
 };
 
-export const drawAllBoundaries = (boundaries, ctx) => {
-  Object.values(boundaries).forEach((boundary) => {
-    if (boundary instanceof Scenery) {
-      drawScenery(boundary, ctx);
+export const drawAllEntities = (entities, ctx) => {
+  Object.values(entities).forEach((entity) => {
+    if (entity.constructor === Object) {
+      drawAllEntities(entity, ctx);
+    } else if (entity instanceof Scenery) {
+      drawScenery(entity, ctx);
+    } else if (entity instanceof Being) {
+      drawBeing(entity, ctx);
     } else {
-      drawEntity(boundary, ctx);
+      drawEntity(entity, ctx);
     }
   });
 };

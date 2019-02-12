@@ -1,4 +1,4 @@
-class Entity {
+class Being {
   constructor(x = 0, y = 0, width, height) {
     this.x = x;
     this.y = y;
@@ -7,4 +7,4 @@ class Entity {
   }
 }
 
-export default Entity;
+export default Being;

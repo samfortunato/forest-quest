@@ -1,10 +1,10 @@
-import Entity from './entity';
+import Being from './being';
 import { wouldCollideWithAny, collisionDetected } from '../util/collision-util';
 import { playerSprites } from '../beings/graphics/beings';
 
 import entities from './entities';
 
-class Player extends Entity {
+class Player extends Being {
   constructor(x = 100, y = 100) {
     super(x, y, 42, 56);
 

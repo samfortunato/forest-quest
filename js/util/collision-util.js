@@ -1,7 +1,5 @@
-import cloneDeep from 'lodash/cloneDeep';
-
 import Scenery from '../scenery/scenery';
-import Entity from '../beings/entity';
+import Being from '../beings/being';
 import Player from '../beings/player';
 
 export const collisionDetected = (entity1, entity2) => {
