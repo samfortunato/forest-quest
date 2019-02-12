@@ -95,28 +95,58 @@ class Player extends Being {
   }
 
   controls(currentlyPressedKeys) {
-    if (currentlyPressedKeys.ArrowUp) {
+    const gamepad = navigator.getGamepads()[0];
+    let buttons;
+
+    // X = 0
+    // Square = 2
+    // D Up = 12
+    // D Right = 15
+    // D Down = 13
+    // D Left = 14
+
+    const currentlyPressedButtons = {};
+
+    if (gamepad) {
+      currentlyPressedButtons.x = gamepad.buttons[0].pressed;
+      currentlyPressedButtons.square = gamepad.buttons[2].pressed;
+
+      currentlyPressedButtons.dUp = gamepad.buttons[12].pressed;
+      currentlyPressedButtons.dRight = gamepad.buttons[15].pressed;
+      currentlyPressedButtons.dDown = gamepad.buttons[13].pressed;
+      currentlyPressedButtons.dLeft = gamepad.buttons[14].pressed;
+    } else {
+      currentlyPressedButtons.x = false;
+      currentlyPressedButtons.square = false;
+  
+      currentlyPressedButtons.dUp = false;
+      currentlyPressedButtons.dRight = false;
+      currentlyPressedButtons.dDown = false;
+      currentlyPressedButtons.dLeft = false;
+    }
+    
+    if (currentlyPressedKeys.ArrowUp || currentlyPressedButtons.dUp) {
       this.facing = 'up';
       this.animate();
       
       if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.move(this.facing);
       }
-    } else if (currentlyPressedKeys.ArrowRight) {
+    } else if (currentlyPressedKeys.ArrowRight || currentlyPressedButtons.dRight) {
       this.facing = 'right';
       this.animate();
 
       if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.move(this.facing);
       }
-    } else if (currentlyPressedKeys.ArrowDown) {
+    } else if (currentlyPressedKeys.ArrowDown || currentlyPressedButtons.dDown) {
       this.facing = 'down';
       this.animate();
 
       if (!wouldCollideWithAny(this.facing, this, entities)) {
         this.move(this.facing);
       }
-    } else if (currentlyPressedKeys.ArrowLeft) {
+    } else if (currentlyPressedKeys.ArrowLeft || currentlyPressedButtons.dLeft) {
       this.facing = 'left';
       this.animate();
 
@@ -125,7 +155,10 @@ class Player extends Being {
       }
     }
     
-    if (currentlyPressedKeys[' ']) {
+    if (currentlyPressedKeys[' '] ||
+        currentlyPressedButtons.x ||
+        currentlyPressedButtons.square) {
+          
       this.attack(this.facing);
     } else {
       this.attacking = false;
