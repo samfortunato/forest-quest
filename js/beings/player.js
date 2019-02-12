@@ -8,7 +8,10 @@ class Player extends Entity {
   constructor(x = 100, y = 100) {
     super(x, y, 42, 56);
 
-    this.hp = 3;
+    this.stats = {
+      hp: 3,
+      attack: 1
+    };
     
     this.speed = 4;
     this.velocity = 1;
@@ -160,13 +163,13 @@ class Player extends Entity {
 
     if (enemiesThatWereHit.length !== 0) {
       enemiesThatWereHit.forEach((enemy) => {
-        enemy.hp--;
+        enemy.hurt(this.stats.attack);
       });
     }
   }
 
-  hurt() {
-    this.hp--;
+  hurt(amount) {
+    this.stats.hp -= amount;
   }
 }
 

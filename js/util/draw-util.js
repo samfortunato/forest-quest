@@ -62,12 +62,12 @@ export const drawAttackBox = (entity, ctx) => {
 };
 
 export const drawEntity = (entity, ctx) => {
-  ctx.fillStyle = entity.color;
+  ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
   ctx.fillRect(entity.x, entity.y, entity.width, entity.height);
 };
 
 export const drawSceneryBounds = (object, ctx) => {
-  ctx.fillStyle = 'rgba(255, 0, 0, .5)';
+  ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
   
   // Draw object sprite bounds
   ctx.fillRect(object.x, object.y, object.width, object.height);

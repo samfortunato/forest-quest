@@ -19,7 +19,7 @@ const draw = () => {
   ctx.clearRect(0, 0, 800, 600);
 
   Object.keys(enemies).forEach((enemyName) => {
-    if (enemies[enemyName].hp <= 0) {
+    if (enemies[enemyName].stats.hp <= 0) {
       delete enemies[enemyName];
     } else {
       enemies[enemyName].track(player);

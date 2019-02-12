@@ -5,9 +5,13 @@ class BasicEnemy extends Entity {
   constructor(x = 200, y = 200) {
     super(x, y, 36, 24);
 
-    this.hp = 3;
+    this.stats = {
+      hp: 3,
+      attack: 1
+    };
     
     this.speed = 1;
+    this.velocity = 1;
     this.facing = 'down';
     
     this.sprite = monsterSprites1;
@@ -60,20 +64,47 @@ class BasicEnemy extends Entity {
     if (entity.y < this.y) {
       this.facing = 'up';
       this.animate();
-      this.y -= this.speed;
+
+      this.move(this.facing);
     } else if (entity.x > this.x) {
       this.facing = 'right';
       this.animate();
-      this.x += this.speed;
+
+      this.move(this.facing);
     } else if (entity.y > this.y) {
       this.facing = 'down';
       this.animate();
-      this.y += this.speed;
+
+      this.move(this.facing);
     } else if (entity.x < this.x) {
       this.facing = 'left';
       this.animate();
-      this.x -= this.speed;
+
+      this.move(this.facing);
     }
+  }
+
+  move(direction) {
+    const moveSpeed = (this.speed * this.velocity);
+    
+    switch (direction) {
+      case 'up':
+        this.y -= moveSpeed;
+        break;
+      case 'right':
+        this.x += moveSpeed;
+        break;
+      case 'down':
+        this.y += moveSpeed;
+        break;
+      case 'left':
+        this.x -= moveSpeed;
+        break;
+    }
+  }
+
+  hurt(amount) {
+    this.stats.hp -= amount;
   }
 }
 

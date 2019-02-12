@@ -17,28 +17,33 @@ export const collisionDetected = (entity1, entity2) => {
 };
 
 export const wouldCollide = (direction, entity1, entity2) => {
-  const entity1Clone = cloneDeep(entity1);
+  const entity1MoveInfo = {
+    x: entity1.x,
+    y: entity1.y,
+    speed: entity1.speed,
+    velocity: entity1.velocity
+  };
 
   switch (direction) {
     case 'up':
-      entity1Clone.y -= (entity1Clone.speed * entity1Clone.velocity);
+      entity1MoveInfo.y -= (entity1MoveInfo.speed * entity1MoveInfo.velocity);
 
-      if (collisionDetected(entity1Clone, entity2)) return true;
+      if (collisionDetected(entity1MoveInfo, entity2)) return true;
       break;
     case 'right':
-      entity1Clone.x += (entity1Clone.speed * entity1Clone.velocity);
+      entity1MoveInfo.x += (entity1MoveInfo.speed * entity1MoveInfo.velocity);
 
-      if (collisionDetected(entity1Clone, entity2)) return true;
+      if (collisionDetected(entity1MoveInfo, entity2)) return true;
       break;
     case 'down':
-      entity1Clone.y += (entity1Clone.speed * entity1Clone.velocity);
+      entity1MoveInfo.y += (entity1MoveInfo.speed * entity1MoveInfo.velocity);
 
-      if (collisionDetected(entity1Clone, entity2)) return true;
+      if (collisionDetected(entity1MoveInfo, entity2)) return true;
       break;
     case 'left':
-      entity1Clone.x -= (entity1Clone.speed * entity1Clone.velocity);
+      entity1MoveInfo.x -= (entity1MoveInfo.speed * entity1MoveInfo.velocity);
 
-      if (collisionDetected(entity1Clone, entity2)) return true;
+      if (collisionDetected(entity1MoveInfo, entity2)) return true;
       break;
   }
 
