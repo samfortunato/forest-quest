@@ -69,7 +69,9 @@ export const wouldCollideWithAny = (direction, entity, entities) => {
   return Object.values(entities).some((otherEntity) => {
     if (otherEntity.constructor === Object) {
       return wouldCollideWithAny(direction, entity, otherEntity);
-    } else if (otherEntity instanceof Player) {
+    } else if (entity instanceof Player &&
+               otherEntity instanceof Player) {
+
       return false;
     } else if (otherEntity instanceof BasicEnemy) {
       return false;

@@ -237,24 +237,28 @@ class Player extends Being {
         }
 
         break;
+        
       case 'right':
         if (!wouldCollideWithAny(direction, this, entities)) {
           this.x += speed;
         }
 
         break;
+        
       case 'down':
         if (!wouldCollideWithAny(direction, this, entities)) {
           this.y += speed;
         }
         
         break;
+        
       case 'left':
         if (!wouldCollideWithAny(direction, this, entities)) {
           this.x -= speed;
         }
 
         break;
+        
     }
   }
 

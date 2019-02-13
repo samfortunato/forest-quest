@@ -1,5 +1,6 @@
 import Being from './being';
 import { monsterSprites1 } from './graphics/beings';
+import { wouldCollideWithAny } from '../util/collision-util';
 
 import entities from './entities';
 
@@ -143,19 +144,28 @@ class BasicEnemy extends Being {
     
     switch (direction) {
       case 'up':
-        this.y -= moveSpeed;
-        break;
+        if (!wouldCollideWithAny(direction, this, entities)) {
+          this.y -= moveSpeed;
+        }
 
+        break;
       case 'right':
-        this.x += moveSpeed;
-        break;
+        if (!wouldCollideWithAny(direction, this, entities)) {
+          this.x += moveSpeed;
+        }
 
+        break;
       case 'down':
-        this.y += moveSpeed;
-        break;
+        if (!wouldCollideWithAny(direction, this, entities)) {
+          this.y += moveSpeed;
+        }
 
+        break;
       case 'left':
-        this.x -= moveSpeed;
+        if (!wouldCollideWithAny(direction, this, entities)) {
+          this.x -= moveSpeed;
+        }
+
         break;
     }
   }
