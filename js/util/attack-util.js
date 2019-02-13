@@ -6,8 +6,10 @@ export const attackCollision = (entity) => {
 
   Object.values(enemies).forEach((enemy) => {
     if (collisionDetected(entity, enemy)) {
-      entity.setState('HURT');
-      entity.knockbackAnim.direction = enemy.facing;
+      if (!entity.stats.invincible) {
+        entity.setState('HURT');
+        entity.knockbackAnim.direction = enemy.facing;
+      }
     }
   });
 };

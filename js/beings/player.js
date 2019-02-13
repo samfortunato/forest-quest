@@ -13,7 +13,8 @@ class Player extends Being {
       currentState: 'IDLE',
       
       hp: 3,
-      attack: 1
+      attack: 1,
+      invincible: false
     };
     
     this.speed = 4;
@@ -306,6 +307,8 @@ class Player extends Being {
   hurt(amount) {
     this.stats.hp -= amount;
     console.log(this.stats.hp);
+
+    this.stats.invincible = true;
   }
 }
 
