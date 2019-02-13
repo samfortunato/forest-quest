@@ -78,8 +78,6 @@ class BasicEnemy extends Being {
   update(entities) {
     const { currentState } = this.stats;
     const { player } = entities.beings.friendlies;
-
-    debugger;
     
     switch (currentState) {
       case 'TRACK':
@@ -111,8 +109,6 @@ class BasicEnemy extends Being {
   }
 
   track(entity) {
-    debugger;
-    
     if (entity.y < this.y) {
       this.facing = 'up';
       this.animate();
