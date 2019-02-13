@@ -26,9 +26,16 @@ class Player extends Being {
     this.ticksPerFrame = 5;
     this.numberOfFrames = 4;
 
-    this.currentKnockbackFrame = 0;
-    this.maxKnockbackFrame = 6;
-    this.knockbackDir = '';
+    this.knockbackAnim = {
+      currentFrame: 0,
+      maxFrame: 6,
+      direction: ''
+    };
+
+    this.attackAnim = {
+      currentFrame: 0,
+      maxFrame: 20
+    };
   }
 
   states() {
@@ -91,16 +98,18 @@ class Player extends Being {
         break;
 
       case 'HURT':
-        if (this.currentKnockbackFrame === 0) {
+        debugger;
+      
+        if (this.knockbackAnim.currentFrame === 0) {
           this.hurt(1);
           this.knockback(14);
-        } else if (this.currentKnockbackFrame > 0 &&
-                   this.currentKnockbackFrame < this.maxKnockbackFrame) {
+        } else if (this.knockbackAnim.currentFrame > 0 &&
+                   this.knockbackAnim.currentFrame < this.knockbackAnim.maxFrame) {
           
           this.knockback(14);
-        } else if (this.currentKnockbackFrame >= this.maxKnockbackFrame) {
-          this.currentKnockbackFrame = 0;
-          this.knockbackDir = '';
+        } else if (this.knockbackAnim.currentFrame >= this.knockbackAnim.maxFrame) {
+          this.knockbackAnim.currentFrame = 0;
+          this.knockbackAnim.direction = '';
 
           this.setState('IDLE');
         }
@@ -266,8 +275,8 @@ class Player extends Being {
   }
 
   knockback(speed) {
-    this.move(this.knockbackDir, speed);
-    this.currentKnockbackFrame++;
+    this.move(this.knockbackAnim.direction, speed);
+    this.knockbackAnim.currentFrame++;
   }
 
   attack(direction) {
