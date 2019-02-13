@@ -1,5 +1,3 @@
-import entities from './beings/entities';
-
 import * as GameUtil from './engine/setup';
 import update from './engine/update';
 import draw from './engine/draw';
@@ -10,9 +8,6 @@ const ctx = GameUtil.setup(canvas);
 GameUtil.initializeControls();
 
 const gameLoop = () => {
-  const { player } = entities.beings.friendlies;
-
-  player.controls();
   update();
   draw(ctx);
   

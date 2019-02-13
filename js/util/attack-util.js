@@ -6,8 +6,8 @@ export const attackCollision = (entity) => {
 
   Object.values(enemies).forEach((enemy) => {
     if (collisionDetected(entity, enemy)) {
-      entity.hurt(enemy.stats.attack);
-      console.log(entity.stats.hp);
+      entity.setState('HURT');
+      entity.knockbackDir = enemy.facing;
     }
   });
 };

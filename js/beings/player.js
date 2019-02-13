@@ -27,6 +27,10 @@ class Player extends Being {
     this.tickCount = 0;
     this.ticksPerFrame = 5;
     this.numberOfFrames = 4;
+
+    this.currentKnockbackFrame = 0;
+    this.maxKnockbackFrame = 6;
+    this.knockbackDir = '';
   }
 
   states() {
@@ -48,14 +52,45 @@ class Player extends Being {
   update() {
     const { currentState } = this.stats;
 
+    const arrowKeysPressedValues = [
+      currentlyPressedKeys.ArrowUp,
+      currentlyPressedKeys.ArrowRight,
+      currentlyPressedKeys.ArrowDown,
+      currentlyPressedKeys.ArrowLeft
+    ];
+
     switch (currentState) {
       case 'IDLE':
+        if (arrowKeysPressedValues.some(pressed => !!pressed)) {
+          this.setState('MOVING');
+        }
+
         break;
 
       case 'MOVING':
+        this.updatePosition();
+
+        if (arrowKeysPressedValues.every(pressed => !pressed)) {
+          this.setState('IDLE');
+        }
+
         break;
 
       case 'HURT':
+        if (this.currentKnockbackFrame === 0) {
+          this.hurt(1);
+          this.knockback(14);
+        } else if (this.currentKnockbackFrame > 0 &&
+                   this.currentKnockbackFrame < this.maxKnockbackFrame) {
+          
+          this.knockback(14);
+        } else if (this.currentKnockbackFrame >= this.maxKnockbackFrame) {
+          this.currentKnockbackFrame = 0;
+          this.knockbackDir = '';
+
+          this.setState('IDLE');
+        }
+
         break;
 
       case 'ATTACKING':
@@ -134,10 +169,9 @@ class Player extends Being {
     };
   }
 
-  controls() {
+  updatePosition() {
     const gamepad = navigator.getGamepads()[0];
-    let buttons;
-
+    
     // X = 0
     // Square = 2
     // D Up = 12
@@ -205,23 +239,28 @@ class Player extends Being {
     }
   }
 
-  move(direction) {
-    const moveSpeed = (this.speed * this.velocity);
+  move(direction, speed) {
+    speed = speed || (this.speed * this.velocity);
     
     switch (direction) {
       case 'up':
-        this.y -= moveSpeed;
+        this.y -= speed;
         break;
       case 'right':
-        this.x += moveSpeed;
+        this.x += speed;
         break;
       case 'down':
-        this.y += moveSpeed;
+        this.y += speed;
         break;
       case 'left':
-        this.x -= moveSpeed;
+        this.x -= speed;
         break;
     }
+  }
+
+  knockback(speed) {
+    this.move(this.knockbackDir, speed);
+    this.currentKnockbackFrame++;
   }
 
   attack(direction) {
