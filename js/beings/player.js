@@ -98,8 +98,6 @@ class Player extends Being {
         break;
 
       case 'HURT':
-        debugger;
-      
         if (this.knockbackAnim.currentFrame === 0) {
           this.hurt(1);
           this.knockback(14);
@@ -292,7 +290,6 @@ class Player extends Being {
     if (enemiesThatWereHit.length !== 0) {
       enemiesThatWereHit.forEach((enemy) => {
         enemy.setState('HURT');
-        console.log(enemy.stats.hp);
       });
     }
   }

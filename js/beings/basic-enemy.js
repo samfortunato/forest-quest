@@ -116,7 +116,7 @@ class BasicEnemy extends Being {
   }
 
   track(entity) {
-    if (entity.y < this.y) {
+    if ((entity.y + (entity.height / 2)) < this.y) {
       this.facing = 'up';
       this.animate();
 
@@ -126,7 +126,7 @@ class BasicEnemy extends Being {
       this.animate();
 
       this.move(this.facing);
-    } else if (entity.y > this.y) {
+    } else if ((entity.y + (entity.height / 2)) > this.y) {
       this.facing = 'down';
       this.animate();
 
@@ -196,6 +196,7 @@ class BasicEnemy extends Being {
 
   hurt(amount) {
     this.stats.hp -= amount;
+    console.log(this.stats.hp);
   }
 }
 
