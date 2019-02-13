@@ -42,7 +42,7 @@ export const drawAttackBox = (entity, ctx) => {
   const { up, right, down, left } = entity.attackBox();
   ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 
-  if (entity.attacking === false) {
+  if (entity.stats.currentState !== 'ATTACKING') {
     return;
   }
   

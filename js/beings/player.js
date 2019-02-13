@@ -19,8 +19,6 @@ class Player extends Being {
     this.speed = 4;
     this.velocity = 1;
     this.facing = 'down';
-
-    this.attacking = false;
     
     this.sprite = playerSprites;
     this.frameIndex = 0;
@@ -51,18 +49,32 @@ class Player extends Being {
 
   update() {
     const { currentState } = this.stats;
+    const gamepad = navigator.getGamepads()[0];
 
-    const arrowKeysPressedValues = [
-      currentlyPressedKeys.ArrowUp,
-      currentlyPressedKeys.ArrowRight,
-      currentlyPressedKeys.ArrowDown,
-      currentlyPressedKeys.ArrowLeft
-    ];
+    const movementKeys = {
+      move: [
+        currentlyPressedKeys.ArrowUp,
+        currentlyPressedKeys.ArrowRight,
+        currentlyPressedKeys.ArrowDown,
+        currentlyPressedKeys.ArrowLeft,
+        gamepad.buttons[12].pressed, // dUp
+        gamepad.buttons[15].pressed, // dRight
+        gamepad.buttons[13].pressed, // dDown
+        gamepad.buttons[14].pressed // dLeft
+      ],
+      attack: [
+        currentlyPressedKeys[' '],
+        gamepad.buttons[0].pressed, // x
+        gamepad.buttons[2].pressed, // square
+      ]
+    };
 
     switch (currentState) {
       case 'IDLE':
-        if (arrowKeysPressedValues.some(pressed => !!pressed)) {
+        if (movementKeys.move.some(pressed => !!pressed)) {
           this.setState('MOVING');
+        } else if (movementKeys.attack.some(pressed => !!pressed)) {
+          this.setState('ATTACKING');
         }
 
         break;
@@ -70,8 +82,10 @@ class Player extends Being {
       case 'MOVING':
         this.updatePosition();
 
-        if (arrowKeysPressedValues.every(pressed => !pressed)) {
+        if (movementKeys.move.every(pressed => !pressed)) {
           this.setState('IDLE');
+        } else if (movementKeys.attack.some(pressed => !!pressed)) {
+          this.setState('ATTACKING');
         }
 
         break;
@@ -94,6 +108,8 @@ class Player extends Being {
         break;
 
       case 'ATTACKING':
+        this.attack(this.facing);
+        this.setState('IDLE');
         break;
 
       case 'JUMPING':
@@ -216,15 +232,6 @@ class Player extends Being {
       this.animate();
       this.move(this.facing);
     }
-    
-    if (currentlyPressedKeys[' '] ||
-        currentlyPressedButtons.x ||
-        currentlyPressedButtons.square) {
-          
-      this.attack(this.facing);
-    } else {
-      this.attacking = false;
-    }
   }
 
   move(direction, speed) {
@@ -237,28 +244,24 @@ class Player extends Being {
         }
 
         break;
-        
       case 'right':
         if (!wouldCollideWithAny(direction, this, entities)) {
           this.x += speed;
         }
 
         break;
-        
       case 'down':
         if (!wouldCollideWithAny(direction, this, entities)) {
           this.y += speed;
         }
         
         break;
-        
       case 'left':
         if (!wouldCollideWithAny(direction, this, entities)) {
           this.x -= speed;
         }
 
         break;
-        
     }
   }
 
@@ -280,12 +283,14 @@ class Player extends Being {
     if (enemiesThatWereHit.length !== 0) {
       enemiesThatWereHit.forEach((enemy) => {
         enemy.setState('HURT');
+        console.log(enemy.stats.hp);
       });
     }
   }
 
   hurt(amount) {
     this.stats.hp -= amount;
+    console.log(this.stats.hp);
   }
 }
 
