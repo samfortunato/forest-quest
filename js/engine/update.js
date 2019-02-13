@@ -11,7 +11,7 @@ const update = () => {
     if (enemies[enemyName].stats.hp <= 0) {
       delete enemies[enemyName];
     } else {
-      enemies[enemyName].track(player);
+      enemies[enemyName].update(entities);
     }
   });
 };

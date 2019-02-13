@@ -196,7 +196,7 @@ class Player extends Being {
 
     if (enemiesThatWereHit.length !== 0) {
       enemiesThatWereHit.forEach((enemy) => {
-        enemy.hurt(this.stats.attack);
+        enemy.setState('HURT');
       });
     }
   }
