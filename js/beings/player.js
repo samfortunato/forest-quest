@@ -26,6 +26,7 @@ class Player extends Being {
     this.tickCount = 0;
     this.ticksPerFrame = 5;
     this.numberOfFrames = 4;
+    this.alpha = 1;
 
     this.knockbackAnim = {
       currentFrame: 0,
@@ -309,6 +310,12 @@ class Player extends Being {
     console.log(this.stats.hp);
 
     this.stats.invincible = true;
+    this.alpha = 0.5;
+
+    setTimeout(() => {
+      this.stats.invincible = false;
+      this.alpha = 1;
+    }, 1000);
   }
 }
 

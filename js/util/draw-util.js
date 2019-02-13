@@ -29,6 +29,10 @@ export const drawBeing = (being, ctx) => {
       break;
   }
   
+  if (being.alpha) {
+    ctx.globalAlpha = being.alpha;
+  }
+  
   ctx.drawImage(
     being.sprite,
     ...cropBox,
@@ -36,6 +40,8 @@ export const drawBeing = (being, ctx) => {
     being.x, being.y,
     ...spriteSize
   );
+
+  ctx.globalAlpha = 1;
 };
 
 export const drawAttackBox = (entity, ctx) => {
