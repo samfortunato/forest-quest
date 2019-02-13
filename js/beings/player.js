@@ -202,31 +202,19 @@ class Player extends Being {
     if (currentlyPressedKeys.ArrowUp || currentlyPressedButtons.dUp) {
       this.facing = 'up';
       this.animate();
-      
-      if (!wouldCollideWithAny(this.facing, this, entities)) {
-        this.move(this.facing);
-      }
+      this.move(this.facing);
     } else if (currentlyPressedKeys.ArrowRight || currentlyPressedButtons.dRight) {
       this.facing = 'right';
       this.animate();
-
-      if (!wouldCollideWithAny(this.facing, this, entities)) {
-        this.move(this.facing);
-      }
+      this.move(this.facing);
     } else if (currentlyPressedKeys.ArrowDown || currentlyPressedButtons.dDown) {
       this.facing = 'down';
       this.animate();
-
-      if (!wouldCollideWithAny(this.facing, this, entities)) {
-        this.move(this.facing);
-      }
+      this.move(this.facing);
     } else if (currentlyPressedKeys.ArrowLeft || currentlyPressedButtons.dLeft) {
       this.facing = 'left';
       this.animate();
-
-      if (!wouldCollideWithAny(this.facing, this, entities)) {
-        this.move(this.facing);
-      }
+      this.move(this.facing);
     }
     
     if (currentlyPressedKeys[' '] ||
@@ -244,16 +232,28 @@ class Player extends Being {
     
     switch (direction) {
       case 'up':
-        this.y -= speed;
+        if (!wouldCollideWithAny(direction, this, entities)) {
+          this.y -= speed;
+        }
+
         break;
       case 'right':
-        this.x += speed;
+        if (!wouldCollideWithAny(direction, this, entities)) {
+          this.x += speed;
+        }
+
         break;
       case 'down':
-        this.y += speed;
+        if (!wouldCollideWithAny(direction, this, entities)) {
+          this.y += speed;
+        }
+        
         break;
       case 'left':
-        this.x -= speed;
+        if (!wouldCollideWithAny(direction, this, entities)) {
+          this.x -= speed;
+        }
+
         break;
     }
   }
