@@ -9,7 +9,9 @@ export const setup = (canvasEl) => {
   return ctx;
 };
 
-export const initializeControls = (currentlyPressedKeys) => {
+export const currentlyPressedKeys = {};
+
+export const initializeControls = () => {
   document.addEventListener('keydown', (e) => {
     currentlyPressedKeys[e.key] = true;
   });

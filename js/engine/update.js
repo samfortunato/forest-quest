@@ -6,12 +6,13 @@ const update = () => {
   const { enemies } = entities.beings;
   
   AttackUtil.attackCollision(player);
+  player.update();
 
   Object.keys(enemies).forEach((enemyName) => {
     if (enemies[enemyName].stats.hp <= 0) {
       delete enemies[enemyName];
     } else {
-      enemies[enemyName].update(entities);
+      enemies[enemyName].update();
     }
   });
 };

@@ -7,13 +7,12 @@ import draw from './engine/draw';
 const canvas = document.querySelector('canvas');
 const ctx = GameUtil.setup(canvas);
 
-const currentlyPressedKeys = {};
-GameUtil.initializeControls(currentlyPressedKeys);
+GameUtil.initializeControls();
 
 const gameLoop = () => {
   const { player } = entities.beings.friendlies;
 
-  player.controls(currentlyPressedKeys);
+  player.controls();
   update();
   draw(ctx);
   

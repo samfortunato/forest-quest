@@ -2,13 +2,16 @@ import Being from './being';
 import { wouldCollideWithAny, collisionDetected } from '../util/collision-util';
 import { playerSprites } from '../beings/graphics/beings';
 
+import { currentlyPressedKeys } from '../engine/setup';
 import entities from './entities';
 
 class Player extends Being {
   constructor(x = 100, y = 100) {
     super(x, y, 42, 56);
-
+    
     this.stats = {
+      currentState: 'IDLE',
+      
       hp: 3,
       attack: 1
     };
@@ -24,6 +27,43 @@ class Player extends Being {
     this.tickCount = 0;
     this.ticksPerFrame = 5;
     this.numberOfFrames = 4;
+  }
+
+  states() {
+    return [
+      'IDLE',
+      'MOVING',
+      'HURT',
+      'ATTACKING',
+      'JUMPING'
+    ];
+  }
+
+  setState(state) {
+    if (this.states().includes(state)) {
+      this.stats.currentState = state;
+    }
+  }
+
+  update() {
+    const { currentState } = this.stats;
+
+    switch (currentState) {
+      case 'IDLE':
+        break;
+
+      case 'MOVING':
+        break;
+
+      case 'HURT':
+        break;
+
+      case 'ATTACKING':
+        break;
+
+      case 'JUMPING':
+        break;
+    }
   }
 
   spriteCropData() {
@@ -94,7 +134,7 @@ class Player extends Being {
     };
   }
 
-  controls(currentlyPressedKeys) {
+  controls() {
     const gamepad = navigator.getGamepads()[0];
     let buttons;
 

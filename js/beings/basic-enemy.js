@@ -7,12 +7,11 @@ class BasicEnemy extends Being {
   constructor(x = 200, y = 200) {
     super(x, y, 36, 24);
 
-    this.states = ['TRACK', 'HURT'];
-    
     this.stats = {
+      currentState: 'TRACK',
+
       hp: 3,
-      attack: 1,
-      currentState: 'TRACK'
+      attack: 1
     };
     
     this.speed = 1;
@@ -26,8 +25,48 @@ class BasicEnemy extends Being {
     this.numberOfFrames = 4;
 
     this.currentKnockbackFrame = 0;
-    this.maxKnockbackFrames = 10;
+    this.maxKnockbackFrames = 5;
     this.knockbackDir = '';
+  }
+
+  states() {
+    return [
+      'TRACK',
+      'HURT'
+    ];
+  }
+
+  update() {
+    const { currentState } = this.stats;
+    const { player } = entities.beings.friendlies;
+
+    switch (currentState) {
+      case 'TRACK':
+        this.track(player);
+        break;
+
+      case 'HURT':
+        if (this.currentKnockbackFrame === 0) {
+          this.hurt(player.stats.attack);
+          this.knockbackDir = player.facing;
+
+          this.knockback(this.knockbackDir);
+        } else if (this.currentKnockbackFrame > 0 &&
+          this.currentKnockbackFrame < this.maxKnockbackFrames) {
+
+          this.knockback(this.knockbackDir);
+        } else if (this.currentKnockbackFrame >= this.maxKnockbackFrames) {
+          this.currentKnockbackFrame = 0;
+          this.knockbackDir = '';
+
+          this.setState('TRACK');
+        }
+
+        break;
+
+      default:
+        break;
+    }
   }
 
   spriteCropData() {
@@ -55,6 +94,12 @@ class BasicEnemy extends Being {
     };
   }
 
+  setState(state) {
+    if (this.states().includes(state)) {
+      this.stats.currentState = state;
+    }
+  }
+
   animate() {
     this.tickCount += 1;
 
@@ -66,45 +111,6 @@ class BasicEnemy extends Being {
       } else {
         this.frameIndex = 0;
       }
-    }
-  }
-
-  setState(state) {
-    if (this.states.includes(state)) {
-      this.stats.currentState = state;
-    }
-  }
-
-  update(entities) {
-    const { currentState } = this.stats;
-    const { player } = entities.beings.friendlies;
-    
-    switch (currentState) {
-      case 'TRACK':
-        this.track(player);
-        break;
-
-      case 'HURT':
-        if (this.currentKnockbackFrame === 0) {
-          this.hurt(player.stats.attack);
-          this.knockbackDir = player.facing;
-
-          this.knockback(this.knockbackDir);
-        } else if (this.currentKnockbackFrame > 0 &&
-                   this.currentKnockbackFrame < this.maxKnockbackFrames) {
-
-          this.knockback(this.knockbackDir);
-        } else if (this.currentKnockbackFrame >= this.maxKnockbackFrames) {
-          this.currentKnockbackFrame = 0;
-          this.knockbackDir = '';
-
-          this.setState('TRACK');
-        }
-
-        break;
-
-      default:
-        break;
     }
   }
 
@@ -157,22 +163,22 @@ class BasicEnemy extends Being {
   knockback(direction) {
     switch (direction) {
       case 'up':
-        this.y -= 10;
+        this.y -= 14;
         this.currentKnockbackFrame++;
         break;
 
       case 'right':
-        this.x += 10;
+        this.x += 14;
         this.currentKnockbackFrame++;
         break;
       
       case 'down':
-        this.y += 10;
+        this.y += 14;
         this.currentKnockbackFrame++;
         break;
 
       case 'left':
-        this.x -= 10;
+        this.x -= 14;
         this.currentKnockbackFrame++;
         break;
     }
