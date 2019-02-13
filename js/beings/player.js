@@ -34,7 +34,7 @@ class Player extends Being {
 
     this.attackAnim = {
       currentFrame: 0,
-      maxFrame: 20
+      maxFrame: 10
     };
   }
 
@@ -115,8 +115,19 @@ class Player extends Being {
         break;
 
       case 'ATTACKING':
-        this.attack(this.facing);
-        this.setState('IDLE');
+        if (this.attackAnim.currentFrame === 0) {
+          this.attack(this.facing);
+          this.attackAnim.currentFrame++;
+        } else if (this.attackAnim.currentFrame > 0 &&
+                this.attackAnim.currentFrame < this.attackAnim.maxFrame) {
+
+          this.attack(this.facing);
+          this.attackAnim.currentFrame++;
+        } else if (this.attackAnim.currentFrame >= this.attackAnim.maxFrame) {
+          this.attackAnim.currentFrame = 0;
+          this.setState('IDLE');
+        }
+        
         break;
 
       case 'JUMPING':
@@ -278,8 +289,6 @@ class Player extends Being {
   }
 
   attack(direction) {
-    this.attacking = true;
-
     const { enemies } = entities.beings;
     const { [direction]: attackBox } = this.attackBox();
 
