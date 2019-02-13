@@ -21,11 +21,11 @@ export const wouldCollide = (direction, entity1, entity2) => {
     width: entity1.width,
     height: entity1.height,
     speed: entity1.speed,
-    velocity: entity1.velocity
+    groundVelocity: entity1.groundVelocity
   };
 
   const entity1MoveSpeed = (
-    entity1MoveInfo.speed * entity1MoveInfo.velocity
+    entity1MoveInfo.speed * entity1MoveInfo.groundVelocity
   );
 
   switch (direction) {

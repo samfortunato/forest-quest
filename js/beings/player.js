@@ -8,6 +8,12 @@ import entities from './entities';
 class Player extends Being {
   constructor(x = 100, y = 100) {
     super(x, y, 42, 56);
+
+    this.speed = 4;
+    this.groundVelocity = 1;
+    this.zVelocity = 0;
+    this.grounded = true;
+    this.facing = 'down';
     
     this.stats = {
       currentState: 'IDLE',
@@ -16,10 +22,6 @@ class Player extends Being {
       attack: 1,
       invincible: false
     };
-    
-    this.speed = 4;
-    this.velocity = 1;
-    this.facing = 'down';
     
     this.sprite = playerSprites;
     this.frameIndex = 0;
@@ -153,6 +155,24 @@ class Player extends Being {
         break;
 
       case 'JUMPING':
+        if (this.grounded) {
+          this.grounded = false;
+          this.zVelocity = 4;
+          this.updatePosition();
+          this.jump();
+
+        } else if (this.zVelocity > -4.1) {
+          this.updatePosition();
+          this.jump();
+
+        } else if (this.zVelocity <= -4.1) {
+          this.grounded = true;
+          this.zVelocity = 0;
+
+          this.setState('IDLE');
+          console.log(this.stats.currentState);
+        }
+
         break;
     }
   }
@@ -275,12 +295,12 @@ class Player extends Being {
   }
 
   move(direction, speed) {
-    speed = speed || (this.speed * this.velocity);
+    speed = speed || (this.speed * this.groundVelocity);
     
     switch (direction) {
       case 'up':
         if (!wouldCollideWithAny(direction, this, entities)) {
-          this.y -= speed;
+          this.y -= (speed);
         }
 
         break;
@@ -303,6 +323,11 @@ class Player extends Being {
 
         break;
     }
+  }
+
+  jump() {
+    this.y -= this.zVelocity;
+    this.zVelocity -= 0.3;
   }
 
   knockback(speed) {

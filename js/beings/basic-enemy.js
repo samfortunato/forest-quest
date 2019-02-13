@@ -16,7 +16,7 @@ class BasicEnemy extends Being {
     };
     
     this.speed = 1;
-    this.velocity = 1;
+    this.groundVelocity = 1;
     this.facing = 'down';
     
     this.sprite = monsterSprites1;
@@ -140,7 +140,7 @@ class BasicEnemy extends Being {
   }
 
   move(direction, moveSpeed) {
-    moveSpeed = moveSpeed || (this.speed * this.velocity);
+    moveSpeed = moveSpeed || (this.speed * this.groundVelocity);
     
     switch (direction) {
       case 'up':
