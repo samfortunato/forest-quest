@@ -6,7 +6,9 @@ export const attackCollision = (entity) => {
 
   Object.values(enemies).forEach((enemy) => {
     if (collisionDetected(entity, enemy)) {
-      if (!entity.stats.invincible) {
+      if (!entity.stats.invincible &&
+          entity.stats.currentState !== 'JUMPING') {
+
         entity.setState('HURT');
         entity.knockbackAnim.direction = enemy.facing;
       }

@@ -66,17 +66,33 @@ class Player extends Being {
         currentlyPressedKeys.ArrowRight,
         currentlyPressedKeys.ArrowDown,
         currentlyPressedKeys.ArrowLeft,
+      ],
+      attack: [
+        currentlyPressedKeys[' '],
+      ],
+      jump: [
+        currentlyPressedKeys.Shift
+      ]
+    };
+
+    if (gamepad) {
+      movementKeys.move.push(
         gamepad.buttons[12].pressed, // dUp
         gamepad.buttons[15].pressed, // dRight
         gamepad.buttons[13].pressed, // dDown
         gamepad.buttons[14].pressed // dLeft
-      ],
-      attack: [
-        currentlyPressedKeys[' '],
+      );
+
+      movementKeys.attack.push(
         gamepad.buttons[0].pressed, // x
-        gamepad.buttons[2].pressed, // square
-      ]
-    };
+        gamepad.buttons[2].pressed // square
+      );
+
+      movementKeys.jump.push(
+        gamepad.buttons[1].pressed, // o
+        gamepad.buttons[3].pressed // triangle
+      );
+    }
 
     switch (currentState) {
       case 'IDLE':
@@ -84,6 +100,8 @@ class Player extends Being {
           this.setState('MOVING');
         } else if (movementKeys.attack.some(pressed => !!pressed)) {
           this.setState('ATTACKING');
+        } else if (movementKeys.jump.some(pressed => !!pressed)) {
+          this.setState('JUMPING');
         }
 
         break;
@@ -93,6 +111,8 @@ class Player extends Being {
 
         if (movementKeys.move.every(pressed => !pressed)) {
           this.setState('IDLE');
+        } else if (movementKeys.jump.some(pressed => !!pressed)) {
+          this.setState('JUMPING');
         } else if (movementKeys.attack.some(pressed => !!pressed)) {
           this.setState('ATTACKING');
         }
