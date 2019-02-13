@@ -10,10 +10,11 @@ class Player extends Being {
     super(x, y, 42, 56);
 
     this.speed = 4;
+    this.facing = 'down';
+
     this.groundVelocity = 1;
     this.zVelocity = 0;
     this.grounded = true;
-    this.facing = 'down';
     
     this.stats = {
       currentState: 'IDLE',
@@ -29,6 +30,10 @@ class Player extends Being {
     this.ticksPerFrame = 5;
     this.numberOfFrames = 4;
     this.alpha = 1;
+
+    this.shadow = {
+
+    };
 
     this.knockbackAnim = {
       currentFrame: 0,
@@ -158,16 +163,18 @@ class Player extends Being {
         if (this.grounded) {
           this.grounded = false;
           this.zVelocity = 4;
+          
           this.updatePosition();
           this.jump();
 
         } else if (this.zVelocity > -4.1) {
           this.updatePosition();
           this.jump();
-
+          
         } else if (this.zVelocity <= -4.1) {
           this.grounded = true;
           this.zVelocity = 0;
+          this.y = Math.floor(this.y) - 1;
 
           this.setState('IDLE');
           console.log(this.stats.currentState);
@@ -255,7 +262,14 @@ class Player extends Being {
     // D Down = 13
     // D Left = 14
 
-    const currentlyPressedButtons = {};
+    const currentlyPressedButtons = {
+      x: false,
+      square: false,
+      dUp: false,
+      dRight: false,
+      dDown: false,
+      dLeft: false
+    };
 
     if (gamepad) {
       currentlyPressedButtons.x = gamepad.buttons[0].pressed;
@@ -265,14 +279,6 @@ class Player extends Being {
       currentlyPressedButtons.dRight = gamepad.buttons[15].pressed;
       currentlyPressedButtons.dDown = gamepad.buttons[13].pressed;
       currentlyPressedButtons.dLeft = gamepad.buttons[14].pressed;
-    } else {
-      currentlyPressedButtons.x = false;
-      currentlyPressedButtons.square = false;
-  
-      currentlyPressedButtons.dUp = false;
-      currentlyPressedButtons.dRight = false;
-      currentlyPressedButtons.dDown = false;
-      currentlyPressedButtons.dLeft = false;
     }
     
     if (currentlyPressedKeys.ArrowUp || currentlyPressedButtons.dUp) {
@@ -326,8 +332,20 @@ class Player extends Being {
   }
 
   jump() {
-    this.y -= this.zVelocity;
-    this.zVelocity -= 0.3;
+    const wouldCollide = ['up', 'right', 'down', 'left'].some((dir) => {
+      return wouldCollideWithAny(dir, this, entities);
+    });
+    
+    if (!wouldCollideWithAny(this.facing, this, entities)) {
+      this.y -= this.zVelocity;
+      this.zVelocity -= 0.3;
+    } else {
+      // this.grounded = true;
+      this.zVelocity = -4.399999999;
+      // this.y = Math.floor(this.y) - 1;
+
+      this.setState('IDLE');
+    }
   }
 
   knockback(speed) {
