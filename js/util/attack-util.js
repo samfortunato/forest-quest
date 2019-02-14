@@ -10,7 +10,7 @@ export const attackCollision = (entity) => {
           entity.stats.currentState !== 'JUMPING') {
 
         entity.setState('HURT');
-        entity.knockbackAnim.direction = enemy.facing;
+        entity.knockbackFrames.direction = enemy.facing;
       }
     }
   });

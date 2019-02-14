@@ -8,7 +8,6 @@ import entities from './entities';
 class Player extends Being {
   constructor(x = 100, y = 100) {
     super(x, y, 42, 56);
-
     
     this.speed = 4;
     this.facing = 'down';
@@ -39,13 +38,13 @@ class Player extends Being {
       height: this.height
     };
 
-    this.knockbackAnim = {
+    this.knockbackFrames = {
       currentFrame: 0,
       maxFrame: 6,
       direction: ''
     };
 
-    this.attackAnim = {
+    this.attackFrames = {
       currentFrame: 0,
       maxFrame: 10
     };
@@ -131,16 +130,16 @@ class Player extends Being {
         break;
 
       case 'HURT':
-        if (this.knockbackAnim.currentFrame === 0) {
+        if (this.knockbackFrames.currentFrame === 0) {
           this.hurt(1);
           this.knockback(14);
-        } else if (this.knockbackAnim.currentFrame > 0 &&
-                   this.knockbackAnim.currentFrame < this.knockbackAnim.maxFrame) {
+        } else if (this.knockbackFrames.currentFrame > 0 &&
+                   this.knockbackFrames.currentFrame < this.knockbackFrames.maxFrame) {
           
           this.knockback(14);
-        } else if (this.knockbackAnim.currentFrame >= this.knockbackAnim.maxFrame) {
-          this.knockbackAnim.currentFrame = 0;
-          this.knockbackAnim.direction = '';
+        } else if (this.knockbackFrames.currentFrame >= this.knockbackFrames.maxFrame) {
+          this.knockbackFrames.currentFrame = 0;
+          this.knockbackFrames.direction = '';
 
           this.setState('IDLE');
         }
@@ -148,16 +147,16 @@ class Player extends Being {
         break;
 
       case 'ATTACKING':
-        if (this.attackAnim.currentFrame === 0) {
+        if (this.attackFrames.currentFrame === 0) {
           this.attack(this.facing);
-          this.attackAnim.currentFrame++;
-        } else if (this.attackAnim.currentFrame > 0 &&
-                this.attackAnim.currentFrame < this.attackAnim.maxFrame) {
+          this.attackFrames.currentFrame++;
+        } else if (this.attackFrames.currentFrame > 0 &&
+                this.attackFrames.currentFrame < this.attackFrames.maxFrame) {
 
           this.attack(this.facing);
-          this.attackAnim.currentFrame++;
-        } else if (this.attackAnim.currentFrame >= this.attackAnim.maxFrame) {
-          this.attackAnim.currentFrame = 0;
+          this.attackFrames.currentFrame++;
+        } else if (this.attackFrames.currentFrame >= this.attackFrames.maxFrame) {
+          this.attackFrames.currentFrame = 0;
           this.setState('IDLE');
         }
         
@@ -375,8 +374,8 @@ class Player extends Being {
   }
 
   knockback(speed) {
-    this.move(this.knockbackAnim.direction, speed);
-    this.knockbackAnim.currentFrame++;
+    this.move(this.knockbackFrames.direction, speed);
+    this.knockbackFrames.currentFrame++;
   }
 
   attack(direction) {
