@@ -1,7 +1,7 @@
 import Scenery from '../scenery/scenery';
 import Being from '../beings/being';
 import Player from '../beings/player';
-import { playerAttackSprites } from '../beings/graphics/beings';
+import { playerAttackSprites } from '../beings/graphics/player';
 
 export const drawBeing = (being, ctx) => {
   const spriteCropData = being.spriteCropData();
@@ -46,43 +46,59 @@ export const drawBeing = (being, ctx) => {
   ctx.globalAlpha = 1;
 };
 
-export const drawBeing2 = (being, ctx) => {
-  const spriteCropData = being.spriteCropData();
+export const drawPlayerIdle = (player, ctx) => {
+  const { sprite } = player;
+  const cropData = sprite.idleCropData();
+  const cropBox = cropData[player.facing][0];
+  const spriteSize = cropData[player.facing][1];
+
+  ctx.globalAlpha = sprite.alpha;
+
+  ctx.drawImage(
+    sprite.spriteSets.idle,
+    ...cropBox,
+    ...spriteSize,
+    player.x, player.y,
+    ...spriteSize
+  );
+};
+
+export const drawPlayerWalk = (player, ctx) => {
+  const { sprite } = player;
+  const cropData = sprite.walkCropData();
 
   let cropBox, spriteSize;
 
-  switch (being.frameIndex) {
+  switch (sprite.frameIndex) {
     case 0:
-      cropBox = spriteCropData[being.facing][0][0];
-      spriteSize = spriteCropData[being.facing][0][1];
+      cropBox = cropData[player.facing][0][0];
+      spriteSize = cropData[player.facing][0][1];
 
       break;
     case 1:
-      cropBox = spriteCropData[being.facing][1][0];
-      spriteSize = spriteCropData[being.facing][1][1];
+      cropBox = cropData[player.facing][1][0];
+      spriteSize = cropData[player.facing][1][1];
 
       break;
     case 2:
-      cropBox = spriteCropData[being.facing][0][0];
-      spriteSize = spriteCropData[being.facing][0][1];
+      cropBox = cropData[player.facing][0][0];
+      spriteSize = cropData[player.facing][0][1];
 
       break;
     case 3:
-      cropBox = spriteCropData[being.facing][2][0];
-      spriteSize = spriteCropData[being.facing][2][1];
+      cropBox = cropData[player.facing][2][0];
+      spriteSize = cropData[player.facing][2][1];
 
       break;
   }
 
-  if (being.alpha) {
-    ctx.globalAlpha = being.alpha;
-  }
+  ctx.globalAlpha = sprite.alpha;
 
   ctx.drawImage(
-    being.sprite,
+    sprite.spriteSets.walk,
     ...cropBox,
     ...spriteSize,
-    being.spritePosition.x, being.spritePosition.y,
+    player.x, player.y,
     ...spriteSize
   );
 
@@ -90,31 +106,42 @@ export const drawBeing2 = (being, ctx) => {
 };
 
 export const drawPlayer = (player, ctx) => {
+  const { sprite } = player;
   const playerState = player.stats.currentState;
 
   switch (playerState) {
+    case 'IDLE':
+      sprite.frameIndex = 0;
+      drawPlayerIdle(player, ctx);
+      break;
+    
+    case 'MOVING':
+      sprite.animateWalk();
+      drawPlayerWalk(player, ctx);
+      break;
+    
     case 'JUMPING':
       break;
 
     case 'ATTACKING':
-      player.setSpritePosition(player.x, player.y);
+      sprite.setPosition(player.x, player.y);
       drawPlayerAttack(player, ctx);
       break;
 
     case 'HURT':
-      player.setSpritePosition(player.x, player.y);
-      drawBeing2(player, ctx);
+      sprite.setPosition(player.x, player.y);
+      drawPlayerWalk(player, ctx);
       break;
 
     default:
-      player.setSpritePosition(player.x, player.y);
-      drawBeing2(player, ctx);
+      sprite.setPosition(player.x, player.y);
+      drawPlayerWalk(player, ctx);
       break;
   }
 };
 
 export const drawPlayerAttack = (player, ctx) => {
-  const attackSpriteCropData = player.attackSpriteCropData();
+  const attackSpriteCropData = player.sprite.attackCropData();
   const cropBox = attackSpriteCropData[player.facing][0];
   const spriteSize = attackSpriteCropData[player.facing][1];
 

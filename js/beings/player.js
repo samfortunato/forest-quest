@@ -1,7 +1,7 @@
 import Being from './being';
-import { wouldCollideWithAny, collisionDetected } from '../util/collision-util';
-import { playerSprites } from '../beings/graphics/beings';
+import PlayerSprite from './graphics/player';
 
+import { wouldCollideWithAny, collisionDetected } from '../util/collision-util';
 import { currentlyPressedKeys } from '../engine/setup';
 import entities from './entities';
 
@@ -23,20 +23,6 @@ class Player extends Being {
       attack: 1,
       invincible: false
     };
-    
-    this.sprite = playerSprites;
-    this.frameIndex = 0;
-    this.tickCount = 0;
-    this.ticksPerFrame = 5;
-    this.numberOfFrames = 4;
-    this.alpha = 1;
-    
-    this.spritePosition = {
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height
-    };
 
     this.knockbackFrames = {
       currentFrame: 0,
@@ -48,6 +34,8 @@ class Player extends Being {
       currentFrame: 0,
       maxFrame: 10
     };
+
+    this.sprite = new PlayerSprite(this.x, this.y);
   }
 
   states() {
@@ -187,67 +175,6 @@ class Player extends Being {
     }
   }
 
-  spriteCropData() {
-    return {
-      up: [
-        [[54, 8], [38, 56]],
-        [[6, 8], [44, 54]],
-        [[102, 8], [44, 54]]
-      ],
-      right: [
-        [[54, 72], [34, 56]],
-        [[6, 72], [38, 54]],
-        [[102, 72], [38, 54]]
-      ],
-      down: [
-        [[52, 136], [42, 56]],
-        [[4, 136], [46, 54]],
-        [[100, 136], [46, 54]]
-      ],
-      left: [
-        [[56, 200], [34, 56]],
-        [[8, 200], [38, 54]],
-        [[104, 200], [38, 54]]
-      ]
-    };
-  }
-
-  attackSpriteCropData() {
-    return {
-      up: [
-        [26, 2], [44, 74]
-      ],
-      right: [
-        [28, 78], [58, 52]
-      ],
-      down: [
-        [24, 132], [46, 68]
-      ],
-      left: [
-        [4, 206], [64, 52]
-      ]
-    };
-  }
-
-  setSpritePosition(x, y) {
-    this.spritePosition.x = x;
-    this.spritePosition.y = y;
-  }
-
-  animate() {
-    this.tickCount += 1;
-
-    if (this.tickCount > this.ticksPerFrame) {
-      this.tickCount = 0;
-
-      if (this.frameIndex < this.numberOfFrames - 1) {
-        this.frameIndex += 1;
-      } else {
-        this.frameIndex = 0;
-      }
-    }
-  }
-
   attackBox() {
     return {
       up: {
@@ -308,19 +235,15 @@ class Player extends Being {
     
     if (currentlyPressedKeys.ArrowUp || currentlyPressedButtons.dUp) {
       this.facing = 'up';
-      this.animate();
       this.move(this.facing);
     } else if (currentlyPressedKeys.ArrowRight || currentlyPressedButtons.dRight) {
       this.facing = 'right';
-      this.animate();
       this.move(this.facing);
     } else if (currentlyPressedKeys.ArrowDown || currentlyPressedButtons.dDown) {
       this.facing = 'down';
-      this.animate();
       this.move(this.facing);
     } else if (currentlyPressedKeys.ArrowLeft || currentlyPressedButtons.dLeft) {
       this.facing = 'left';
-      this.animate();
       this.move(this.facing);
     }
   }
@@ -398,11 +321,9 @@ class Player extends Being {
     console.log(this.stats.hp);
 
     this.stats.invincible = true;
-    this.alpha = 0.5;
 
     setTimeout(() => {
       this.stats.invincible = false;
-      this.alpha = 1;
     }, 1000);
   }
 }

@@ -1,30 +1,46 @@
-export const playerSprites = new Image();
-playerSprites.src = './img/beings/heroes.png';
+export const playerWalkSprites = new Image();
+playerWalkSprites.src = './img/beings/heroes.png';
 
 export const playerAttackSprites = new Image();
 playerAttackSprites.src = './img/beings/hero-attacking.png';
 
 class PlayerSprite {
-  constructor() {
-    this.sprite = playerSprites;
-    this.x = 0;
-    this.y = 0;
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
     this.width = 0;
     this.height = 0;
+    
+    this.spriteSets = {
+      idle: playerWalkSprites,
+      walk: playerWalkSprites,
+      attack: playerAttackSprites,
+      jump: ''
+    };
+
+    this.alpha = 1;
 
     this.frameIndex = 0;
     this.tickCount = 0;
     this.ticksPerFrame = 5;
     this.numberOfFrames = 4;
-    this.alpha = 1;
   }
 
-  setSpritePosition(x, y) {
-    this.spritePosition.x = x;
-    this.spritePosition.y = y;
+  setPosition(x, y) {
+    this.x = x;
+    this.y = y;
   }
 
-  spriteCropData() {
+  idleCropData() {
+    return {
+      up: [[54, 8], [38, 56]],
+      right: [[54, 72], [34, 56]],
+      down: [[52, 136], [42, 56]],
+      left: [[56, 200], [34, 56]]
+    };
+  }
+
+  walkCropData() {
     return {
       up: [
         [[54, 8], [38, 56]],
@@ -49,20 +65,12 @@ class PlayerSprite {
     };
   }
 
-  attackSpriteCropData() {
+  attackCropData() {
     return {
-      up: [
-        [26, 2], [44, 74]
-      ],
-      right: [
-        [28, 78], [58, 52]
-      ],
-      down: [
-        [24, 132], [46, 68]
-      ],
-      left: [
-        [4, 206], [64, 52]
-      ]
+      up: [[26, 2], [44, 74]],
+      right: [[28, 78], [58, 52]],
+      down: [[24, 132], [46, 68]],
+      left: [[4, 206], [64, 52]]
     };
   }
 
