@@ -44,6 +44,33 @@ export const drawBeing = (being, ctx) => {
   ctx.globalAlpha = 1;
 };
 
+export const drawPlayer = (player, ctx) => {
+  const playerState = player.stats.currentState;
+
+  switch (playerState) {
+    case 'IDLE':
+      drawBeing(player, ctx);
+      break;
+
+    case 'MOVING':
+      drawBeing(player, ctx);
+      break;
+
+    case 'JUMPING':
+      break;
+
+    case 'ATTACKING':
+      break;
+
+    case 'HURT':
+      break;
+
+    default:
+      drawBeing(player, ctx);
+      break;
+  }
+};
+
 export const drawAttackBox = (entity, ctx) => {
   const { up, right, down, left } = entity.attackBox();
   ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
@@ -98,6 +125,8 @@ export const drawAllEntities = (entities, ctx) => {
       drawAllEntities(entity, ctx);
     } else if (entity instanceof Scenery) {
       drawScenery(entity, ctx);
+    } else if (entity instanceof Player) {
+      drawPlayer(entity, ctx);
     } else if (entity instanceof Being) {
       drawBeing(entity, ctx);
     } else {
