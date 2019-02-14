@@ -1,5 +1,7 @@
 import Scenery from '../scenery/scenery';
 import Being from '../beings/being';
+import Player from '../beings/player';
+import { playerAttackSprites } from '../beings/graphics/beings';
 
 export const drawBeing = (being, ctx) => {
   const spriteCropData = being.spriteCropData();
@@ -44,31 +46,102 @@ export const drawBeing = (being, ctx) => {
   ctx.globalAlpha = 1;
 };
 
+export const drawBeing2 = (being, ctx) => {
+  const spriteCropData = being.spriteCropData();
+
+  let cropBox, spriteSize;
+
+  switch (being.frameIndex) {
+    case 0:
+      cropBox = spriteCropData[being.facing][0][0];
+      spriteSize = spriteCropData[being.facing][0][1];
+
+      break;
+    case 1:
+      cropBox = spriteCropData[being.facing][1][0];
+      spriteSize = spriteCropData[being.facing][1][1];
+
+      break;
+    case 2:
+      cropBox = spriteCropData[being.facing][0][0];
+      spriteSize = spriteCropData[being.facing][0][1];
+
+      break;
+    case 3:
+      cropBox = spriteCropData[being.facing][2][0];
+      spriteSize = spriteCropData[being.facing][2][1];
+
+      break;
+  }
+
+  if (being.alpha) {
+    ctx.globalAlpha = being.alpha;
+  }
+
+  ctx.drawImage(
+    being.sprite,
+    ...cropBox,
+    ...spriteSize,
+    being.spritePosition.x, being.spritePosition.y,
+    ...spriteSize
+  );
+
+  ctx.globalAlpha = 1;
+};
+
 export const drawPlayer = (player, ctx) => {
   const playerState = player.stats.currentState;
 
   switch (playerState) {
-    case 'IDLE':
-      drawBeing(player, ctx);
-      break;
-
-    case 'MOVING':
-      drawBeing(player, ctx);
-      break;
-
     case 'JUMPING':
       break;
 
     case 'ATTACKING':
+      player.setSpritePosition(player.x, player.y);
+      drawPlayerAttack(player, ctx);
       break;
 
     case 'HURT':
+      player.setSpritePosition(player.x, player.y);
+      drawBeing2(player, ctx);
       break;
 
     default:
-      drawBeing(player, ctx);
+      player.setSpritePosition(player.x, player.y);
+      drawBeing2(player, ctx);
       break;
   }
+};
+
+export const drawPlayerAttack = (player, ctx) => {
+  const attackSpriteCropData = player.attackSpriteCropData();
+  const cropBox = attackSpriteCropData[player.facing][0];
+  const spriteSize = attackSpriteCropData[player.facing][1];
+
+  let spritePosition;
+
+  switch (player.facing) {
+    case 'up':
+      spritePosition = [player.x - 2, player.y - 24];
+      break;
+    case 'right':
+      spritePosition = [player.x, player.y + 4];
+      break;
+    case 'down':
+      spritePosition = [player.x - 2, player.y + 6];
+      break;
+    case 'left':
+      spritePosition = [player.x - 29, player.y + 4];
+      break;
+  }
+  
+  ctx.drawImage(
+    playerAttackSprites,
+    ...cropBox,
+    ...spriteSize,
+    ...spritePosition,
+    ...spriteSize
+  );
 };
 
 export const drawAttackBox = (entity, ctx) => {

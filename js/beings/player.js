@@ -9,9 +9,10 @@ class Player extends Being {
   constructor(x = 100, y = 100) {
     super(x, y, 42, 56);
 
+    
     this.speed = 4;
     this.facing = 'down';
-
+    
     this.groundVelocity = 1;
     this.zVelocity = 0;
     this.grounded = true;
@@ -30,9 +31,12 @@ class Player extends Being {
     this.ticksPerFrame = 5;
     this.numberOfFrames = 4;
     this.alpha = 1;
-
-    this.shadow = {
-
+    
+    this.spritePosition = {
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height
     };
 
     this.knockbackAnim = {
@@ -207,6 +211,28 @@ class Player extends Being {
         [[104, 200], [38, 54]]
       ]
     };
+  }
+
+  attackSpriteCropData() {
+    return {
+      up: [
+        [26, 2], [44, 74]
+      ],
+      right: [
+        [28, 78], [58, 52]
+      ],
+      down: [
+        [24, 132], [46, 68]
+      ],
+      left: [
+        [4, 206], [64, 52]
+      ]
+    };
+  }
+
+  setSpritePosition(x, y) {
+    this.spritePosition.x = x;
+    this.spritePosition.y = y;
   }
 
   animate() {
