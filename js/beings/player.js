@@ -253,26 +253,26 @@ class Player extends Being {
     return {
       up: {
         x: (this.x + 5),
-        y: (this.y - (this.height / 2) - 4),
+        y: (this.y - (this.height / 2) + 6),
         width: 42,
         height: 28
       },
       right: {
-        x: (this.x + this.width),
+        x: (this.x + this.width) - 8,
         y: (this.y + 20),
-        width: 28,
-        height: 42
+        width: 22,
+        height: 42 
       },
       down: {
         x: (this.x - 5),
-        y: (this.y + this.height + 2),
+        y: (this.y + this.height - 12),
         width: this.width,
         height: (this.height / 2)
       },
       left: {
-        x: (this.x - this.width + 6),
+        x: (this.x - this.width + 15),
         y: (this.y + 20),
-        width: 28,
+        width: 24,
         height: 42
       }
     };
