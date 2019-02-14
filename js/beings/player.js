@@ -252,26 +252,26 @@ class Player extends Being {
   attackBox() {
     return {
       up: {
-        x: this.x,
-        y: (this.y - (this.height / 2)),
+        x: (this.x + 5),
+        y: (this.y - (this.height / 2) - 4),
         width: 42,
         height: 28
       },
       right: {
         x: (this.x + this.width),
-        y: (this.y + (this.height / 2)),
+        y: (this.y + 20),
         width: 28,
         height: 42
       },
       down: {
-        x: this.x,
-        y: (this.y + this.height),
+        x: (this.x - 5),
+        y: (this.y + this.height + 2),
         width: this.width,
         height: (this.height / 2)
       },
       left: {
-        x: (this.x - this.width + 10),
-        y: (this.y + (this.height / 2)),
+        x: (this.x - this.width + 6),
+        y: (this.y + 20),
         width: 28,
         height: 42
       }
