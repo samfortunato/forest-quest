@@ -1,5 +1,5 @@
 import { CurrentGame } from './setup';
-import { currentlyPressedKeys } from './setup';
+import AudioPlayer from '../audio/audio_player';
 
 import { updateTitleScreen } from '../options/title_screen_update';
 import entities from '../beings/entities';
@@ -28,6 +28,8 @@ const update = () => {
       });
     }
   }
+
+  AudioPlayer.update();
 };
 
 export default update;

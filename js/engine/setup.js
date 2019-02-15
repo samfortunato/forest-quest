@@ -23,4 +23,9 @@ export const initializeControls = () => {
   });
 };
 
+export const audioPlayer = {
+  music: document.querySelector('#music'),
+  sfx1: document.querySelector('#sfx-1')
+};
+
 export const CurrentGame = new Game();
