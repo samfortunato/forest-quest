@@ -1,9 +1,39 @@
-#game {
+body {
+  font-family: 'Titillium Web', Helvetica, Arial, sans-serif;
+  background-color: #000;
+  line-height: 1.2;
+  color: #fff;
+}
+
+a {
+  color: rgb(0, 120, 255);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2 {
+  font-family: 'Titillium Web', sans-serif;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+main {
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  /* margin: auto; */
 
   padding-top: 1rem;
+}
+
+#game-container {
+  margin: 0 auto;
 }
 
 #grid {
@@ -14,4 +44,39 @@
 
 canvas {
   display: block;
+}
+
+#game-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+#game-info ul {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+#about-game {
+  width: 33%;
+  text-align: right;
+}
+
+#about-game ul {
+  list-style: none;
+}
+
+#about-game li {
+  display: inline;
+}
+
+#about-game li::after {
+  content: ' ◦ ';
+}
+
+#about-game li:last-child::after {
+  content: '';
+}
+
+aside {
+  font-size: .9rem;
 }

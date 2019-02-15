@@ -1,12 +1,15 @@
 import { CurrentGame } from '../engine/setup';
 
+const titleScreenBG = new Image();
+titleScreenBG.src = './img/backgrounds/title-screen.png';
+
 export const drawTitleScreen = (ctx) => {
   const { titleScreen } = CurrentGame.states;
 
   ctx.clearRect(0, 0, 800, 608);
 
   ctx.fillStyle = '#000';
-  ctx.fillRect(0, 0, 800, 608);
+  ctx.drawImage(titleScreenBG, 0, 0);
 
   const [titleText, menuText] = [
     titleScreen.titleText(),

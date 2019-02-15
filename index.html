@@ -8,26 +8,56 @@
   <title>Forest Quest</title>
   
   <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <div id="game">
-    <img id="grid" src="img/grid-helper.png" alt="">
-    <canvas></canvas>
-  </div>
-  
-  <audio
-    id="sfx-1"
-    src=""
-  ></audio>
-  
-  <audio
-    id="music"
-    src="audio/music/toby-fox-before-the-story.mp3"
-    type="audio/mp3"
-    loop
-  ></audio>
+  <main>
+    <div id="game-container">
+      <img id="grid" src="img/grid-helper.png" alt="">
+      <canvas></canvas>
+      
+      <audio
+      id="sfx-1"
+      src=""
+      ></audio>
+      
+      <audio
+      id="music"
+      src="audio/music/toby-fox-before-the-story.mp3"
+      type="audio/mp3"
+      loop
+      ></audio>
+
+      <article id="game-info">
+        <section id="main-info">
+          <h1>Forest Quest</h1>
+      
+          <ul>
+            <li>Arrow keys to move</li>
+            <li>Space to attack</li>
+            <li>Shift to jump</li>
+          </ul>
+        </section>
+
+        <section id="about-game">
+          <h2>By Sam Fortunato</h2>
+          
+          <ul>
+            <li><a href="#">Portfolio</a></li>
+            <li><a href="#">GitHub</a></li>
+            <li><a href="#">LinkedIn</a></li>
+          </ul>
+
+          <aside>
+            * If you have a PS3 controller, the game will work with that, too. Try it out!
+          </aside>
+        </section>
+      </article>
+    </div>
+  </main>
+
 
   <script src="js/dist/bundle.js"></script>
 </body>
