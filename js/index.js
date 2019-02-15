@@ -14,4 +14,4 @@ const gameLoop = () => {
   requestAnimationFrame(gameLoop);
 };
 
-gameLoop();
+document.addEventListener('DOMContentLoaded', gameLoop);

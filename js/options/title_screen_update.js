@@ -1,4 +1,5 @@
 import { CurrentGame } from '../engine/setup';
+import AudioPlayer from '../audio/audio_player';
 
 export const changeMenuOption = (e) => {
   const { titleScreen } = CurrentGame.states;
@@ -6,9 +7,11 @@ export const changeMenuOption = (e) => {
   switch (e.key) {
     case 'ArrowUp':
       titleScreen.decrementMenuOption();
+      AudioPlayer.playSFX('menuOption');
       break;
     case 'ArrowDown':
       titleScreen.incrementMenuOption();
+      AudioPlayer.playSFX('menuOption');
       break;
     case 'Enter':
       if (titleScreen.state.currentOption === 0) {
