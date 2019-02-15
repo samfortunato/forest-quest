@@ -29,7 +29,7 @@ class TitleScreen {
     return {
       text: 'Forest Quest',
       x: 75,
-      y: 75
+      y: 85
     };
   }
 
