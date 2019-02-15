@@ -5,6 +5,8 @@ import { wouldCollideWithAny, collisionDetected } from '../util/collision-util';
 import { currentlyPressedKeys } from '../engine/setup';
 import entities from './entities';
 
+import AudioPlayer from '../audio/audio_player';
+
 class Player extends Being {
   constructor(x = 100, y = 100) {
     super(x, y, 42, 56);
@@ -121,6 +123,8 @@ class Player extends Being {
         if (this.knockbackFrames.currentFrame === 0) {
           this.hurt(1);
           this.knockback(14);
+
+          AudioPlayer.playSFX('playerHurt');
         } else if (this.knockbackFrames.currentFrame > 0 &&
                    this.knockbackFrames.currentFrame < this.knockbackFrames.maxFrame) {
           
@@ -138,6 +142,8 @@ class Player extends Being {
         if (this.attackFrames.currentFrame === 0) {
           this.attack(this.facing);
           this.attackFrames.currentFrame++;
+
+          AudioPlayer.playSFX('playerAttack');
         } else if (this.attackFrames.currentFrame > 0 &&
                 this.attackFrames.currentFrame < this.attackFrames.maxFrame) {
 
@@ -155,6 +161,8 @@ class Player extends Being {
           this.grounded = false;
           this.zVelocity = 4;
           
+          AudioPlayer.playSFX('playerJump');
+
           this.updatePosition();
           this.jump();
 
@@ -297,6 +305,7 @@ class Player extends Being {
 
     if (enemiesThatWereHit.length !== 0) {
       enemiesThatWereHit.forEach((enemy) => {
+        AudioPlayer.playSFX('playerAttackHit');
         enemy.setState('HURT');
       });
     }

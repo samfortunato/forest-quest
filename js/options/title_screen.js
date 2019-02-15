@@ -1,3 +1,5 @@
+import AudioPlayer from '../audio/audio_player';
+
 class TitleScreen {
   constructor() {
     this.state = {
@@ -13,6 +15,8 @@ class TitleScreen {
     } else {
       this.state.currentOption = 0;
     }
+
+    AudioPlayer.playSFX('menuOption');
   }
 
   decrementMenuOption() {
@@ -23,6 +27,8 @@ class TitleScreen {
     } else {
       this.state.currentOption = 1;
     }
+
+    AudioPlayer.playSFX('menuOption');
   }
 
   titleText() {
