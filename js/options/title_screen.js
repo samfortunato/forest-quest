@@ -29,7 +29,7 @@ class TitleScreen {
     return {
       text: 'Forest Quest',
       x: 75,
-      y: 85
+      y: 200
     };
   }
 
@@ -38,13 +38,13 @@ class TitleScreen {
       play: {
         text: 'Start Game',
         x: 75,
-        y: 275
+        y: 300
       },
 
       options: {
         text: 'Options',
         x: 75,
-        y: 325
+        y: 350
       }
     };
   }

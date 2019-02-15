@@ -24,9 +24,9 @@ export const drawTitleScreen = (ctx) => {
 
   switch (titleScreen.state.currentOption) {
     case 0:
-      ctx.fillRect(50, 283, 10, 10);
+      ctx.fillRect(50, 308, 10, 10);
       break;
     case 1:
-      ctx.fillRect(50, 333, 10, 10);
+      ctx.fillRect(50, 358, 10, 10);
   }
 };
