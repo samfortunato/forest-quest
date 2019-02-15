@@ -1,28 +1,49 @@
 import { CurrentGame } from '../engine/setup';
-import AudioPlayer from '../audio/audio_player';
+const { titleScreen } = CurrentGame.states;
 
-export const changeMenuOption = (e) => {
-  const { titleScreen } = CurrentGame.states;
-  
+export const changeMenuOption = (e) => {  
   switch (e.key) {
     case 'ArrowUp':
       titleScreen.decrementMenuOption();
-      AudioPlayer.playSFX('menuOption');
       break;
     case 'ArrowDown':
-      titleScreen.incrementMenuOption();
-      AudioPlayer.playSFX('menuOption');
+    titleScreen.incrementMenuOption();
       break;
-    case 'Enter':
+      case 'Enter':
       if (titleScreen.state.currentOption === 0) {
         CurrentGame.setState('PLAYING');
         document.removeEventListener('keydown', changeMenuOption);
       }
-
+      
       break;
   }
 };
 
+let menuWait = 0;
+
 export const updateTitleScreen = () => {
   document.addEventListener('keydown', changeMenuOption);
+
+  const gamepad = navigator.getGamepads()[0];
+
+  if (gamepad) {
+    if (gamepad.buttons[12].pressed && menuWait === 0) {
+      titleScreen.decrementMenuOption();
+      menuWait++;
+    } else if (gamepad.buttons[13].pressed && menuWait === 0) {
+      titleScreen.incrementMenuOption();
+      menuWait++;
+    } else if (gamepad.buttons[0].pressed &&
+               titleScreen.state.currentOption === 0) {
+      
+      CurrentGame.setState('PLAYING');
+      document.removeEventListener('keydown', changeMenuOption);
+    }
+  }
+  
+  if (menuWait !== 0 && menuWait < 10) {
+    menuWait++;
+  } else if (menuWait >= 10) {
+    menuWait = 0;
+  }
 };
