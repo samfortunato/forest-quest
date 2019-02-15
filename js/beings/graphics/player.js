@@ -35,7 +35,7 @@ class PlayerSprite {
 
   idleCropData() {
     return {
-      up: [[52, 8], [38, 56]],
+      up: [[52, 8], [40, 56]],
       right: [[54, 72], [34, 56]],
       down: [[52, 136], [42, 56]],
       left: [[56, 200], [34, 56]]
@@ -45,7 +45,7 @@ class PlayerSprite {
   walkCropData() {
     return {
       up: [
-        [[52, 8], [38, 56]],
+        [[52, 8], [40, 56]],
         [[4, 8], [44, 54]],
         [[100, 8], [44, 54]]
       ],
@@ -78,7 +78,7 @@ class PlayerSprite {
 
   attackCropData() {
     return {
-      up: [[24, 2], [44, 74]],
+      up: [[24, 4], [46, 74]],
       right: [[28, 78], [58, 52]],
       down: [[24, 132], [46, 68]],
       left: [[4, 206], [64, 52]]
