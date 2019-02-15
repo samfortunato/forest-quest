@@ -1,7 +1,6 @@
 import Scenery from '../scenery/scenery';
 import Being from '../beings/being';
 import Player from '../beings/player';
-import { playerAttackSprites } from '../beings/graphics/player';
 
 export const drawBeing = (being, ctx) => {
   const spriteCropData = being.spriteCropData();
@@ -52,6 +51,8 @@ export const drawPlayerIdle = (player, ctx) => {
   const cropBox = cropData[player.facing][0];
   const spriteSize = cropData[player.facing][1];
 
+  sprite.frameIndex = 0;
+  
   ctx.globalAlpha = sprite.alpha;
 
   ctx.drawImage(
@@ -61,39 +62,44 @@ export const drawPlayerIdle = (player, ctx) => {
     player.x, player.y,
     ...spriteSize
   );
+
+  ctx.globalAlpha = 1;
 };
 
 export const drawPlayerWalk = (player, ctx) => {
+  
   const { sprite } = player;
   const cropData = sprite.walkCropData();
 
   let cropBox, spriteSize;
-
+  
   switch (sprite.frameIndex) {
     case 0:
       cropBox = cropData[player.facing][0][0];
       spriteSize = cropData[player.facing][0][1];
 
       break;
-    case 1:
+      case 1:
       cropBox = cropData[player.facing][1][0];
       spriteSize = cropData[player.facing][1][1];
 
       break;
-    case 2:
+      case 2:
       cropBox = cropData[player.facing][0][0];
       spriteSize = cropData[player.facing][0][1];
-
+      
       break;
-    case 3:
+      case 3:
       cropBox = cropData[player.facing][2][0];
       spriteSize = cropData[player.facing][2][1];
-
+      
       break;
   }
+  
+  sprite.animateWalk();
 
   ctx.globalAlpha = sprite.alpha;
-
+    
   ctx.drawImage(
     sprite.spriteSets.walk,
     ...cropBox,
@@ -105,39 +111,23 @@ export const drawPlayerWalk = (player, ctx) => {
   ctx.globalAlpha = 1;
 };
 
-export const drawPlayer = (player, ctx) => {
+export const drawPlayerJump = (player, ctx) => {
   const { sprite } = player;
-  const playerState = player.stats.currentState;
+  const cropData = sprite.jumpCropData();
+  const cropBox = cropData[player.facing][0];
+  const spriteSize = cropData[player.facing][1];
 
-  switch (playerState) {
-    case 'IDLE':
-      sprite.frameIndex = 0;
-      drawPlayerIdle(player, ctx);
-      break;
-    
-    case 'MOVING':
-      sprite.animateWalk();
-      drawPlayerWalk(player, ctx);
-      break;
-    
-    case 'JUMPING':
-      break;
+  ctx.globalAlpha = sprite.alpha;
 
-    case 'ATTACKING':
-      sprite.setPosition(player.x, player.y);
-      drawPlayerAttack(player, ctx);
-      break;
-
-    case 'HURT':
-      sprite.setPosition(player.x, player.y);
-      drawPlayerWalk(player, ctx);
-      break;
-
-    default:
-      sprite.setPosition(player.x, player.y);
-      drawPlayerWalk(player, ctx);
-      break;
-  }
+  ctx.drawImage(
+    sprite.spriteSets.jump,
+    ...cropBox,
+    ...spriteSize,
+    sprite.x, sprite.y,
+    ...spriteSize
+  );
+  
+  ctx.globalAlpha = 1;
 };
 
 export const drawPlayerAttack = (player, ctx) => {
@@ -149,7 +139,7 @@ export const drawPlayerAttack = (player, ctx) => {
 
   switch (player.facing) {
     case 'up':
-      spritePosition = [player.x - 2, player.y - 24];
+      spritePosition = [player.x - 2, player.y - 18];
       break;
     case 'right':
       spritePosition = [player.x, player.y + 4];
@@ -161,9 +151,9 @@ export const drawPlayerAttack = (player, ctx) => {
       spritePosition = [player.x - 29, player.y + 4];
       break;
   }
-  
+
   ctx.drawImage(
-    playerAttackSprites,
+    player.sprite.spriteSets.attack,
     ...cropBox,
     ...spriteSize,
     ...spritePosition,
@@ -171,9 +161,64 @@ export const drawPlayerAttack = (player, ctx) => {
   );
 };
 
+export const drawPlayer = (player, ctx) => {
+  const { sprite } = player;
+  const playerState = player.stats.currentState;
+
+  if (player.stats.invincible) {
+    sprite.alpha = 0.5;
+  } else {
+    sprite.alpha = 1;
+  }
+
+  switch (playerState) {
+    case 'IDLE':
+      drawPlayerIdle(player, ctx);
+      break;
+    
+    case 'MOVING':
+      drawPlayerWalk(player, ctx);
+      break;
+    
+    case 'JUMPING':
+      if (sprite.spriteJumpOffset === 0) {
+        sprite.spriteJumpOffset = player.zVelocity;
+
+        sprite.setPosition(
+          player.x, player.y - sprite.spriteJumpOffset
+        );
+      } else if (player.zVelocity > -4.1) {
+        sprite.spriteJumpOffset += player.zVelocity;
+        
+        sprite.setPosition(
+          player.x, player.y - sprite.spriteJumpOffset
+        );
+      } else {
+        sprite.spriteJumpOffset = 0;
+        sprite.setPosition(player.x, player.y);
+      }
+
+      drawPlayerJump(player, ctx);
+      break;
+
+    case 'ATTACKING':
+      drawPlayerAttack(player, ctx);
+      break;
+
+    case 'HURT':
+      drawPlayerWalk(player, ctx);
+      break;
+
+    default:
+      sprite.setPosition(player.x, player.y);
+      drawPlayerWalk(player, ctx);
+      break;
+  }
+};
+
 export const drawAttackBox = (entity, ctx) => {
   const { up, right, down, left } = entity.attackBox();
-  ctx.fillStyle = 'rgba(255, 0, 0, 0)';
+  ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 
   if (entity.stats.currentState !== 'ATTACKING') {
     return;

@@ -10,20 +10,22 @@ class PlayerSprite {
     this.y = y;
     this.width = 0;
     this.height = 0;
-    
+
     this.spriteSets = {
       idle: playerWalkSprites,
       walk: playerWalkSprites,
       attack: playerAttackSprites,
-      jump: ''
+      jump: playerWalkSprites
     };
-
+    
     this.alpha = 1;
-
+    
     this.frameIndex = 0;
     this.tickCount = 0;
     this.ticksPerFrame = 5;
     this.numberOfFrames = 4;
+
+    this.spriteJumpOffset = 0;
   }
 
   setPosition(x, y) {
@@ -62,6 +64,15 @@ class PlayerSprite {
         [[8, 200], [38, 54]],
         [[104, 200], [38, 54]]
       ]
+    };
+  }
+
+  jumpCropData() {
+    return {
+      up: [[6, 8], [44, 54]],
+      right: [[6, 72], [38, 54]],
+      down: [[4, 136], [46, 54]],
+      left: [[8, 200], [38, 54]]
     };
   }
 

@@ -165,10 +165,9 @@ class Player extends Being {
         } else if (this.zVelocity <= -4.1) {
           this.grounded = true;
           this.zVelocity = 0;
-          this.y = Math.floor(this.y) - 1;
+          // this.sprite.y = Math.floor(this.sprite.y) - 1;
 
           this.setState('IDLE');
-          console.log(this.stats.currentState);
         }
 
         break;
@@ -280,20 +279,7 @@ class Player extends Being {
   }
 
   jump() {
-    const wouldCollide = ['up', 'right', 'down', 'left'].some((dir) => {
-      return wouldCollideWithAny(dir, this, entities);
-    });
-    
-    if (!wouldCollideWithAny(this.facing, this, entities)) {
-      this.y -= this.zVelocity;
-      this.zVelocity -= 0.3;
-    } else {
-      // this.grounded = true;
-      this.zVelocity = -4.399999999;
-      // this.y = Math.floor(this.y) - 1;
-
-      this.setState('IDLE');
-    }
+    this.zVelocity -= 0.3;
   }
 
   knockback(speed) {

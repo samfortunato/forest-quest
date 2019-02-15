@@ -9,7 +9,7 @@
 #grid {
   z-index: 10;
   position: absolute;
-  display: block;
+  display: none;
 }
 
 canvas {
