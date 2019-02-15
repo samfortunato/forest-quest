@@ -218,7 +218,7 @@ export const drawPlayer = (player, ctx) => {
 
 export const drawAttackBox = (entity, ctx) => {
   const { up, right, down, left } = entity.attackBox();
-  ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+  ctx.fillStyle = 'rgba(255, 0, 0, 0)';
 
   if (entity.stats.currentState !== 'ATTACKING') {
     return;

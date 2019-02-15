@@ -1,3 +1,5 @@
+import Game from './game';
+
 export const setup = (canvasEl) => {
   canvasEl.width = 800;
   canvasEl.height = 608;
@@ -20,3 +22,5 @@ export const initializeControls = () => {
     currentlyPressedKeys[e.key] = false;
   });
 };
+
+export const CurrentGame = new Game();

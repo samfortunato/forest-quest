@@ -1,19 +1,29 @@
+import TitleScreen from '../options/title_screen';
+
 class Game {
   constructor() {
-    this._currentState = 'BEFORE_PLAY';
+    this._currentState = 'ON_TITLE_SCREEN';
+    
+    this.states = {
+      titleScreen: new TitleScreen()
+    };
   }
 
-  states() {
+  possibleStates() {
     return [
       'BEFORE_PLAY',
-      'TITLE_SCREEN',
-      'PLAY',
-      'MENU'
+      'ON_TITLE_SCREEN',
+      'PLAYING',
+      'MENU_OPEN'
     ];
   }
 
+  currentState() {
+    return this._currentState;
+  }
+
   setState(state) {
-    if (this.states().includes(state)) {
+    if (this.possibleStates().includes(state)) {
       this._currentState = state;
     }
   }

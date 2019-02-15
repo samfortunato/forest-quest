@@ -30,7 +30,7 @@ class BasicEnemy extends Being {
     this.knockbackDir = '';
   }
 
-  states() {
+  possibleStates() {
     return [
       'TRACK',
       'HURT'
@@ -96,7 +96,7 @@ class BasicEnemy extends Being {
   }
 
   setState(state) {
-    if (this.states().includes(state)) {
+    if (this.possibleStates().includes(state)) {
       this.stats.currentState = state;
     }
   }

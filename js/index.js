@@ -1,11 +1,11 @@
-import * as GameUtil from './engine/setup';
+import * as GameSetup from './engine/setup';
 import update from './engine/update';
 import draw from './engine/draw';
 
 const canvas = document.querySelector('canvas');
-const ctx = GameUtil.setup(canvas);
+const ctx = GameSetup.setup(canvas);
 
-GameUtil.initializeControls();
+GameSetup.initializeControls();
 
 const gameLoop = () => {
   update();

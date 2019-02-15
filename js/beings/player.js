@@ -38,7 +38,7 @@ class Player extends Being {
     this.sprite = new PlayerSprite(this.x, this.y);
   }
 
-  states() {
+  possibleStates() {
     return [
       'IDLE',
       'MOVING',
@@ -49,7 +49,7 @@ class Player extends Being {
   }
 
   setState(state) {
-    if (this.states().includes(state)) {
+    if (this.possibleStates().includes(state)) {
       this.stats.currentState = state;
     }
   }
