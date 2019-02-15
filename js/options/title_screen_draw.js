@@ -8,7 +8,6 @@ export const drawTitleScreen = (ctx) => {
 
   ctx.clearRect(0, 0, 800, 608);
 
-  ctx.fillStyle = '#000';
   ctx.drawImage(titleScreenBG, 0, 0);
 
   const [titleText, menuText] = [
@@ -19,6 +18,8 @@ export const drawTitleScreen = (ctx) => {
   ctx.font = '4rem Titillium Web';
   ctx.textBaseline = 'top';
   ctx.fillStyle = '#fff';
+  ctx.shadowColor = 'rgba(0, 0, 0, 1)';
+  ctx.shadowBlur = 50;
   ctx.fillText(titleText.text, titleText.x, titleText.y);
 
   ctx.font = '2rem Titillium Web';
@@ -32,4 +33,6 @@ export const drawTitleScreen = (ctx) => {
     case 1:
       ctx.fillRect(50, 358, 10, 10);
   }
+
+  ctx.shadowColor = 'transparent';
 };
