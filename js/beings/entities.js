@@ -22,7 +22,6 @@ const entities = {
     tree5: new AllScenery.Tree(736, 64),
     tree6: new AllScenery.Tree(896, 0),
     tree7: new AllScenery.Tree(64, 160),
-    // tree8: new AllScenery.Tree(300, 300),
     stump1: new AllScenery.Stump(640, 416)
   },
 };
